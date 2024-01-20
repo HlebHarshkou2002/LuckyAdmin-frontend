@@ -1,0 +1,21 @@
+.sale__wrapper {
+    display: flex;
+
+    &:nth-child(2n) {
+            background-color: #f1f1f1;
+    }
+
+    div {
+        border-right: 1px solid #f1f1f1;
+        width: 300px;
+        padding: 5px;
+
+
+        text-align: right;
+
+        &:first-child {
+            text-align: left;
+        }
+
+    }
+}

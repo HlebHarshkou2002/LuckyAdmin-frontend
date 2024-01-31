@@ -77,9 +77,6 @@ function Login() {
               </div>
             </form>
 
-            <Link to="/registration" className={s.registation__title}>
-              Registation
-            </Link>
           </div>
         </div>
       </div>

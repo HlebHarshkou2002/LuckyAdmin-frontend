@@ -14,6 +14,15 @@ function AdminSidebar() {
       <div>
         <Link to="/admin/analysis" className={s.link}>Анализ продаж</Link>
       </div>
+      <div>
+        <Link to="/admin/orders" className={s.link}>Заказы</Link>
+      </div>
+      <div>
+        <Link to="/admin/supplies" className={s.link}>Поставки</Link>
+      </div>
+      <div>
+        <Link to="/admin/users" className={s.link}>Управление пользователями</Link>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,25 @@
+.users__block {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    width: 80%;
+
+    div {
+        margin-right: 10px;
+
+        button {
+            width: 60px;
+            border: none;
+            background-color: red;
+
+            &:hover{
+                cursor: pointer;
+                background-color: black;
+                color: white;
+            }
+        }
+    }
+}

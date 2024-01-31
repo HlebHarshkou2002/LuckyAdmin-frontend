@@ -3,7 +3,7 @@ import axios from "../axios";
 
 
 export const fetchAuth = createAsyncThunk('auth/fetchAuth', async (params) => {
-    const {data} = await axios.post('/auth/login', params);
+    const {data} = await axios.post('/admin/auth/login', params);
     return data;
 })
 
@@ -13,7 +13,7 @@ export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (param
 })
 
 export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
-    const {data} = await axios.get('/auth/me');
+    const {data} = await axios.get('/admin/auth/me');
     return data;
 })
 

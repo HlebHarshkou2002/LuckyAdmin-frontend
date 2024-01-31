@@ -23,14 +23,6 @@ const SalesChart = () => {
     dispatch(fetchSales());
   }, []);
 
-  //   const salesData = [
-  //     { title: "react", price: 13.99, date: "2023-09-11" },
-  //     { title: "mongo", price: 23.99, date: "2023-11-11" },
-  //     { title: "mongo", price: 3.99, date: "2023-11-11" },
-  //     { title: "mongo", price: 15, date: "2023-11-11" },
-  //     { title: "mongo", price: 24.99, date: "2023-11-11" },
-  //   ];
-
   return (
     <div className={s.chart__wrapper}>
       {isSalesDataLoading ? (

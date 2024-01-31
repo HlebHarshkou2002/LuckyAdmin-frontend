@@ -8,8 +8,7 @@ import AddProduct from "../../Components/AdminProducts/AdminProducts";
 function AdminPanel() {
   return (
     <div className={s.admin__panel__wrapper}>
-      <AdminSidebar />
-        
+      <AdminSidebar />  
 
     </div>
   );

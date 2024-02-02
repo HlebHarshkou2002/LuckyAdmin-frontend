@@ -18,7 +18,7 @@ function Users() {
         <div>
             {isUsersLoading ? "Loading" : (
                 users.items.data.map((user) => (
-                    <User fullName={user.fullName} email={user.email} createdAt={user.createdAt}/>
+                    <User _id={user._id} fullName={user.fullName} email={user.email} createdAt={user.createdAt}/>
                 )) 
             )}
             Общее количество пользователей: {isUsersLoading ? "loading" : users.items.data.length}

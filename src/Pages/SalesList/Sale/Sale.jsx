@@ -10,10 +10,13 @@ function Sale(props) {
                 {props.title}
             </div>
             <div>
-                {props.price} BYN
+                {props.saleCount}
             </div>
             <div>
-                {/* {props.user.fullName} */}
+                {(props.price * props.saleCount).toFixed(2)}
+            </div>
+            <div>
+                {(props.user === null) ? "Пользователь удалён" : props.user.fullName}
             </div>
             <div>
                 {date.getDate() + "."}

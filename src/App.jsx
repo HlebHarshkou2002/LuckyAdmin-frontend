@@ -5,7 +5,7 @@ import "./App.scss";
 import Header from "./Components/Header/Header";
 import Login from "./Pages/Login/Login";
 
-import { useDispatch, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
 import AdminPanel from "./Pages/AdminPanel/AdminPanel";
 import AdminProducts from "./Components/AdminProducts/AdminProducts";
@@ -13,6 +13,10 @@ import AddProduct from "./Components/AddProduct/AddProduct";
 
 import SalesChart from "./Pages/SalesChart/SalesChart";
 import Users from "./Pages/Users/Users";
+import Supplies from "./Pages/Supplies/Supplies";
+import FullSupply from "./Pages/FullSupply/FullSupply";
+import Providers from "./Pages/Providers/Providers";
+import CreateSupply from "./Pages/CreateSupply/CreateSupply";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +48,10 @@ function App() {
             <Route path="/admin/add-product" element={<AddProduct />} /> 
             <Route path="/admin/analysis" element={<SalesChart /> } /> 
             <Route path="/admin/users" element={<Users /> } /> 
+            <Route path="/admin/supplies" element={<Supplies /> } /> 
+            <Route path="/supplies/:id" element={<FullSupply /> } /> 
+            <Route path="/providers" element={<Providers /> } /> 
+            <Route path="/admin/add-supply" element={<CreateSupply /> } /> 
           </Routes>
         </div>
       </div>

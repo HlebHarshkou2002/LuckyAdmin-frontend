@@ -21,6 +21,12 @@ function AdminSidebar() {
         <Link to="/admin/supplies" className={s.link}>Поставки</Link>
       </div>
       <div>
+        <Link to="/admin/add-supply" className={s.link}>Сформировать поставку</Link>
+      </div>
+      <div>
+        <Link to="/providers" className={s.link}>Поставщики</Link>
+      </div>
+      <div>
         <Link to="/admin/users" className={s.link}>Управление пользователями</Link>
       </div>
     </div>

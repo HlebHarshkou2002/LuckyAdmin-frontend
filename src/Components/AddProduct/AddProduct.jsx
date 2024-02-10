@@ -30,7 +30,7 @@ function AddProduct() {
             if(data) {
                 alert("Товар создан!")
             }
-        } catch(err) {
+        } catch(err) { 
             console.log(err)
         }
     }

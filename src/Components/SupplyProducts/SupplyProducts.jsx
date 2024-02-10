@@ -1,10 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../redux/slices/products";
-import AdminProduct from "./AdminProduct/AdminProduct";
-import s from "./AdminProducts.module.scss"
+import SupplyProduct from "./SupplyProduct/SupplyProduct";
 
-function AdminProducts() {
+function SupplyProducts() {
   const dispatch = useDispatch();
   const { products, genres } = useSelector((state) => state.products);
 
@@ -17,12 +16,12 @@ function AdminProducts() {
   console.log(products);
 
   return (
-    <div className={s.products__wrapper}>
+    <div className="products__wrapper">
       {isProductsLoading
         ? "Loading"
         : products.items.data.map((product) => {
             return (
-              <AdminProduct
+              <SupplyProduct
                 _id={product._id}
                 title={product.title}
                 price={product.price}
@@ -41,4 +40,4 @@ function AdminProducts() {
   );
 }
 
-export default AdminProducts;
+export default SupplyProducts;

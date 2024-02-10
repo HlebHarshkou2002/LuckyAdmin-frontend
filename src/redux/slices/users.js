@@ -25,7 +25,7 @@ const usersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    //Получение товаров
+    //Получение пользователей
     [fetchUsers.pending]: (state, action) => {
       state.users.status = "loading";
     },

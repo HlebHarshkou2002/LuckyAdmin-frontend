@@ -1,9 +1,9 @@
 import React from "react";
-import "./AdminProduct.scss";
 import { useDispatch } from "react-redux";
 import { fetchRemoveProduct } from "../../../redux/slices/products";
 import { Navigate } from "react-router-dom";
 import axios from "../../../redux/axios";
+import s from "./AdminProduct.module.scss"
 
 function AdminProduct(props) {
   const [title, setTitle] = React.useState(props.title);
@@ -51,7 +51,7 @@ function AdminProduct(props) {
   };
 
   return (
-    <div className="product__wrapper">
+    <div className={s.product__wrapper}>
       <div>{props._id}</div>
       <div>
         <input

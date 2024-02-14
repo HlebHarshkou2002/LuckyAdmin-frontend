@@ -52,7 +52,6 @@ function AdminProduct(props) {
 
   return (
     <div className={s.product__wrapper}>
-      <div>{props._id}</div>
       <div>
         <input
           type="text"

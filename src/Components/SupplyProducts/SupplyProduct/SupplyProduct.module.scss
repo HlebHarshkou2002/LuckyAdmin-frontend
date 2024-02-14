@@ -1,7 +1,11 @@
 .product__block {
     display: flex;
     padding: 5px;
+    background-color: #f2f2f2;
+    margin-bottom: 5px;
     div {
-        
+        width: 200px;
+        margin-right: 10px;
+
     }
 }

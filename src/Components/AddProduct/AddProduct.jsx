@@ -26,7 +26,7 @@ function AddProduct() {
                 complexity,
                 rating
             }
-            const {data } = await axios.post('/products', fields);
+            const {data } = await axios.post('/admin/products', fields);
             if(data) {
                 alert("Товар создан!")
             }

@@ -1,28 +1,27 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../redux/slices/products";
 import SupplyProduct from "./SupplyProduct/SupplyProduct";
+import s from "./SupplyProducts.module.scss"
+import { fetchAdminProducts } from "../../redux/slices/adminProducts";
 
-function SupplyProducts() {
+function SupplyProducts(props) {
   const dispatch = useDispatch();
-  const { products, genres } = useSelector((state) => state.products);
+  const { products, genres } = useSelector((state) => state.adminProducts);
 
   const isProductsLoading = products.status === "loading";
 
   React.useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchAdminProducts());
   }, []);
 
-  console.log(products);
-
   return (
-    <div className="products__wrapper">
+    <div className={s.products__block}>
       {isProductsLoading
         ? "Loading"
         : products.items.data.map((product) => {
             return (
               <SupplyProduct
-                _id={product._id}
+                id={product._id}
                 title={product.title}
                 price={product.price}
                 genres={product.genres}
@@ -33,6 +32,7 @@ function SupplyProducts() {
                 imgUrl={product.imgUrl}
                 complexity={product.complexity}
                 rating={product.rating}
+                productsId={props.productsId}
               />
             );
           })}

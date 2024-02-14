@@ -7,6 +7,7 @@ import { salesReducer } from "./slices/sales";
 import { usersReducer } from "./slices/users";
 import { suppliesReducer } from "./slices/supplies";
 import { providersReducer } from "./slices/providers";
+import { adminProductsReducer } from "./slices/adminProducts";
 
 // const rootReducer = combineReducers({
 //     products: productsReducer
@@ -20,7 +21,8 @@ const store = configureStore({
         sales: salesReducer,
         users: usersReducer,
         supplies: suppliesReducer,
-        providers: providersReducer
+        providers: providersReducer,
+        adminProducts: adminProductsReducer
     }
 })
 

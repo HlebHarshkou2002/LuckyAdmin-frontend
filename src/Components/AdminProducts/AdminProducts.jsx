@@ -1,17 +1,17 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../redux/slices/products";
 import AdminProduct from "./AdminProduct/AdminProduct";
 import s from "./AdminProducts.module.scss"
+import { fetchAdminProducts } from "../../redux/slices/adminProducts";
 
 function AdminProducts() {
   const dispatch = useDispatch();
-  const { products, genres } = useSelector((state) => state.products);
+  const { products, genres } = useSelector((state) => state.adminProducts);
 
   const isProductsLoading = products.status === "loading";
 
   React.useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchAdminProducts());
   }, []);
 
   console.log(products);

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import s from "./FullSupply.module.scss";
 import { useParams } from "react-router-dom";
 import axios from "../../redux/axios";
+import Product from "../../Components/Product/Product";
 
 function FullSupply(props) {
   const [isLoading, setLoading] = React.useState(true);
@@ -25,6 +26,7 @@ function FullSupply(props) {
   if (isLoading) {
     return "Loading";
   }
+
 
   return (
     <div>
@@ -54,8 +56,8 @@ function FullSupply(props) {
         {data.comments}
       </div>
       <div>
-        {data.products.map(() => (
-            "Product"
+        {data.products.map((product) => (
+            <Product title={product.title} imgUrl={product.imgUrl} author={product.author} price={product.price}/>
         ))}
       </div>
     </div>

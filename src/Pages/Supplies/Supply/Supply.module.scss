@@ -5,6 +5,12 @@
     background-color: #f2f2f2;
     padding: 10px;
     div{
-        width: 200px;
+        img {
+            width: 30px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
 }

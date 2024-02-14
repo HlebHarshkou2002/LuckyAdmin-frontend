@@ -1,0 +1,13 @@
+.product__wrapper {
+    display: flex;
+    border-bottom: 1px solid #f2f2f2;
+    padding: 3px;
+    margin-bottom: 2px;
+
+    div{
+        margin-right: 10px;
+        img{
+            width: 80px;
+        }
+    }
+}

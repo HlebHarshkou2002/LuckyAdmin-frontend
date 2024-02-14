@@ -6,10 +6,10 @@ function AdminSidebar() {
   return (
     <div className={s.admin__sidebar__wrapper}>
       <div>
-        <Link to="/admin/products" className={s.link}>Товары</Link>
+        <Link to="/admin/products" className={s.link}>База товаров</Link>
       </div>
       <div>
-        <Link to="/admin/add-product" className={s.link}>Добавить Товар</Link>
+        <Link to="/admin/ready-products" className={s.link}>Товары на сайте</Link>
       </div>
       <div>
         <Link to="/admin/analysis" className={s.link}>Анализ продаж</Link>

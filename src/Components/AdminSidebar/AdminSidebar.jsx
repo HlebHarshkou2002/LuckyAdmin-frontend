@@ -6,19 +6,19 @@ function AdminSidebar() {
   return (
     <div className={s.admin__sidebar__wrapper}>
       <div>
-        <Link to="/admin/products" className={s.link}>База товаров</Link>
-      </div>
-      <div>
-        <Link to="/admin/ready-products" className={s.link}>Товары на сайте</Link>
+        <Link to="/products" className={s.link}>Товар</Link>
       </div>
       <div>
         <Link to="/admin/analysis" className={s.link}>Анализ продаж</Link>
       </div>
       <div>
+        <Link to="/admin/sales" className={s.link}>Продажи</Link>
+      </div>
+      <div>
         <Link to="/admin/orders" className={s.link}>Заказы</Link>
       </div>
       <div>
-        <Link to="/admin/supplies" className={s.link}>Поставки</Link>
+        <Link to="/supplies" className={s.link}>Поставки</Link>
       </div>
       <div>
         <Link to="/admin/add-supply" className={s.link}>Сформировать поставку</Link>
@@ -27,7 +27,7 @@ function AdminSidebar() {
         <Link to="/providers" className={s.link}>Поставщики</Link>
       </div>
       <div>
-        <Link to="/admin/users" className={s.link}>Управление пользователями</Link>
+        <Link to="/admin/users" className={s.link}>Пользователи</Link>
       </div>
     </div>
   );

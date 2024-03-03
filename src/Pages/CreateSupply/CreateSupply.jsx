@@ -4,11 +4,11 @@ import SupplyProducts from "../../Components/SupplyProducts/SupplyProducts";
 import SupplyForm from "../../Components/SupplyForm/SupplyForm";
 
 function CreateSupply() {
-  const productsId = []
+  const products = []
   return (
     <div className={s.supply__block}>
-      <SupplyProducts productsId={productsId}/>
-      <SupplyForm productsId={productsId}/>
+      <SupplyProducts products={products}/>
+      <SupplyForm products={products}/>
     </div>
   );
 }

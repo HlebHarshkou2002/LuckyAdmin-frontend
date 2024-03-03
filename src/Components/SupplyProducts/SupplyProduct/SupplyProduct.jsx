@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "./SupplyProduct.module.scss";
 
 
 
 function SupplyProduct(props) {
+  const [storeCount, setStoreCount] = useState();
 
   const handleChange = (event) => {
     let checked = event.target.checked;
     if(checked) {
-      props.productsId.push(props.id)
+      const product = {
+        "_id" : props.id,
+        "title" : props.title,
+        "price" : props.price,
+        "author" : props.author,
+        "imgUrl" : props.imgUrl,
+        "storeCount" : Number(storeCount),
+
+      }
+
+      console.log(product)
+
+      props.products.push(product)
     }
   }
 
@@ -20,7 +33,11 @@ function SupplyProduct(props) {
         {props.price}
         BYN
       </div>
-      <div>{props.genres.join(", ")}</div>
+      <div>
+        {props.storeCount}
+      </div>
+      <div>{props.categories.join(", ")}</div>
+      <div><input type="number" placeholder="кол-во товара" name="storeCount" value={storeCount} onChange={e => setStoreCount(e.target.value)}/></div>
       <div><input type="checkbox" onChange={handleChange}/></div>
     </div>
   );

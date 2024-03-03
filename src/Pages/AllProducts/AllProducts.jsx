@@ -1,7 +1,7 @@
 import React from "react";
 import s from './AllProducts.module.scss'
 
-import AdminProducts from "../../Components/AdminProducts/AdminProducts";
+import AdminProducts from "../../Components/Products/Products";
 import AddProduct from "../../Components/AddProduct/AddProduct";
 
 function AllProducts() {

@@ -16,6 +16,7 @@ import FullSupply from "./Pages/FullSupply/FullSupply";
 import Providers from "./Pages/Providers/Providers";
 import CreateSupply from "./Pages/CreateSupply/CreateSupply";
 import AllProducts from "./Pages/AllProducts/AllProducts";
+import SalesList from "./Pages/SalesList/SalesList";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,10 +44,11 @@ function App() {
 
             {/* Admin */}
             {/* <Route path="/" element={<AdminPanel />} /> */}
-            <Route path="/admin/products" element={<AllProducts />} /> 
+            <Route path="/products" element={<AllProducts />} /> 
             <Route path="/admin/analysis" element={<SalesChart /> } /> 
+            <Route path="/admin/sales" element={<SalesList /> } /> 
             <Route path="/admin/users" element={<Users /> } /> 
-            <Route path="/admin/supplies" element={<Supplies /> } /> 
+            <Route path="/supplies" element={<Supplies /> } /> 
             <Route path="/supplies/:id" element={<FullSupply /> } /> 
             <Route path="/providers" element={<Providers /> } /> 
             <Route path="/admin/add-supply" element={<CreateSupply /> } /> 

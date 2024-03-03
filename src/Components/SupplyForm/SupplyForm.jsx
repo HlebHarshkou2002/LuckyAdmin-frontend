@@ -16,7 +16,8 @@ function SupplyForm(props) {
 
   const onSubmit = async () => {
     try{
-        let products = props.productsId
+        let products = props.products
+        console.log(products)
         const fields = {
             title,
             dateOfDelivery,
@@ -27,6 +28,7 @@ function SupplyForm(props) {
         }
         console.log(fields)
         const {data } = await axios.post('/supplies', fields);
+        console.log(data)
         if(data) {
             alert("Поставка оформлена!")
         }

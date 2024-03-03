@@ -16,7 +16,10 @@ function Sale(props) {
                 {(props.price * props.saleCount).toFixed(2)}
             </div>
             <div>
-                {(props.user === null) ? "Пользователь удалён" : props.user.fullName}
+                {props.categories}
+            </div>
+            <div>
+                {props.provider === null ? "Не поставляется" : props.provider.providerName}
             </div>
             <div>
                 {date.getDate() + "."}

@@ -1,11 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SupplyProduct from "./SupplyProduct/SupplyProduct";
-import s from "./SupplyProducts.module.scss"
+import Product from "./Product/Product";
+import s from "./Products.module.scss";
 import { fetchProducts } from "../../redux/slices/products";
 
-
-function SupplyProducts(props) {
+function Products() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const status = useSelector((state) => state.products.status);
@@ -16,16 +15,28 @@ function SupplyProducts(props) {
     dispatch(fetchProducts());
   }, []);
 
+  console.log(products);
+
   return (
-    <div className={s.products__block}>
+    <div className={s.products__wrapper}>
+      <div className={s.header}>
+        <div className={s.header__item}>Наименование товара</div>
+        <div className={s.header__item}>Цена (BYN)</div>
+        <div className={s.header__item}>Цена поставки (BYN)</div>
+        <div className={s.header__item}>Остаток (Шт)</div>
+        <div className={s.header__item}>Категории</div>
+        <div className={s.header__item}>Удалить/Редактировать</div>
+
+      </div>
       {isProductsLoading
         ? "Loading"
         : products.map((product) => {
             return (
-              <SupplyProduct
-                id={product._id}
+              <Product
+                _id={product._id}
                 title={product.title}
                 price={product.price}
+                deliveryPrice={product.deliveryPrice}
                 storeCount={product.storeCount}
                 categories={product.categories}
                 userName={product.user?.fullName}
@@ -35,7 +46,6 @@ function SupplyProducts(props) {
                 imgUrl={product.imgUrl}
                 complexity={product.complexity}
                 rating={product.rating}
-                products={props.products}
               />
             );
           })}
@@ -43,4 +53,4 @@ function SupplyProducts(props) {
   );
 }
 
-export default SupplyProducts;
+export default Products;

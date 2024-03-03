@@ -3,7 +3,7 @@ import s from './AdminPanel.scss'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AdminSidebar from "../../Components/AdminSidebar/AdminSidebar";
-import AddProduct from "../../Components/AdminProducts/AdminProducts";
+import AddProduct from "../../Components/Products/Products";
 
 function AdminPanel() {
   return (

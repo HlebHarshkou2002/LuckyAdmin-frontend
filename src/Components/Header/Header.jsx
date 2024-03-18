@@ -3,29 +3,67 @@ import s from "./Header.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 
-import basketIcon from "../../images/Header/basket-icon.png";
+import { logout, selectIsAuth } from "../../redux/slices/auth";
+import { UserOutlined } from "@ant-design/icons";
 
-import emailImg from "../../images/Header/email-icon.png";
-import lockImg from "../../images/Header/lock-icon.png";
-import { logout, selectIsAdmin, selectIsAuth } from "../../redux/slices/auth";
+import { Avatar, Space, Dropdown, Button } from "antd";
 
-function Header(props) {
+import { LogoutOutlined, SettingOutlined } from "@ant-design/icons";
+
+function HeaderContainer(props) {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
-  const isAdmin = useSelector(selectIsAdmin);
 
-  const {items, totalPrice } = useSelector(state => state.cart)
+  const items = [
+    {
+      key: "1",
+      label: (
+        <div>
+          <div>{props.fullName}</div>
+          <div>{props.email}</div>
+        </div>
+      ),
+      type: "text",
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "2",
+      label: <div>Настройки</div>,
+    },
+    {
+      key: "3",
+      label: <div>Профиль</div>,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "4",
+      label: (
+        <div>
+          {isAuth ? (
+            <div onClick={onClickLogout} className={s.logout__btn}>
+              Выход <LogoutOutlined />
+            </div>
+          ) : (
+            <Link to="/login" className={s.auth__info}>
+              <span>Account</span>
+            </Link>
+          )}
+        </div>
+      ),
+      danger: true,
+    },
+  ];
 
-  const handleSearchValueChange = (e) => {
-    props.setSearchValue(e.target.value);
-  };
-
-  const onClickLogout = () => {
+  function onClickLogout() {
     if (window.confirm("Вы действительно хотите выйти?")) {
       dispatch(logout());
       window.localStorage.removeItem("token");
     }
-  };
+  }
 
   if (!isAuth) {
     <Navigate to="/" />;
@@ -36,25 +74,22 @@ function Header(props) {
       <div className={s.account__header__wrapper}>
         <div className={s.account__header}>
           <div className={s.email__info}>
-            <img src={emailImg} alt="email" />
-            <span>{props.email}</span>
+            <Space wrap size={14}>
+              <Dropdown
+                menu={{
+                  items,
+                }}
+                placement="bottomRight"
+              >
+                <Avatar size={40} icon={<UserOutlined />} />
+              </Dropdown>
+            </Space>
           </div>
-          <div>
-            {isAuth ? (
-              <button onClick={onClickLogout} className={s.logout__btn}>
-                Logout
-              </button>
-            ) : (
-              <Link to="/login" className={s.auth__info}>
-                <img src={lockImg} alt="lock" />
-                <span>Account</span>
-              </Link>
-            )}
-          </div>
+          <div></div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Header;
+export default HeaderContainer;

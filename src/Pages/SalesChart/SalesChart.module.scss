@@ -1,3 +1,16 @@
 .chart__wrapper {
     margin: 0 auto;
+    margin-right: 200px;
+
+    .sub__charts {
+        margin-top: 50px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .dashboard {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 30px;
+    }
 }

@@ -1,16 +1,19 @@
-.sales__wrapper {
+.sales__block {
+  margin-right: 200px;
+  .sales__wrapper {
     max-width: 1200px;
     margin: 0 auto;
-  .header {
-    display: flex;
-  }
+    .header {
+      display: flex;
+    }
 
-  .header__item {
-    border-right: 1px solid #f1f1f1;
+    .header__item {
+      border-right: 1px solid #f1f1f1;
 
-    color: white;
-    background-color: #212121;
-    width: 300px;
-    padding: 5px;
+      color: white;
+      background-color: #212121;
+      width: 300px;
+      padding: 5px;
+    }
   }
 }

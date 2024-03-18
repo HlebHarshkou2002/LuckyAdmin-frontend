@@ -5,6 +5,7 @@ import s from "./SupplyProduct.module.scss";
 
 function SupplyProduct(props) {
   const [storeCount, setStoreCount] = useState();
+  const [deliveryPrice, setDeliveryPrice] = useState();
 
   const handleChange = (event) => {
     let checked = event.target.checked;
@@ -16,10 +17,8 @@ function SupplyProduct(props) {
         "author" : props.author,
         "imgUrl" : props.imgUrl,
         "storeCount" : Number(storeCount),
-
+        "deliveryPrice": Number(deliveryPrice)
       }
-
-      console.log(product)
 
       props.products.push(product)
     }
@@ -38,6 +37,7 @@ function SupplyProduct(props) {
       </div>
       <div>{props.categories.join(", ")}</div>
       <div><input type="number" placeholder="кол-во товара" name="storeCount" value={storeCount} onChange={e => setStoreCount(e.target.value)}/></div>
+      <div><input type="number" placeholder="цена поставки" name="deliveryPrice" value={deliveryPrice} onChange={e => setDeliveryPrice(e.target.value)}/></div>
       <div><input type="checkbox" onChange={handleChange}/></div>
     </div>
   );

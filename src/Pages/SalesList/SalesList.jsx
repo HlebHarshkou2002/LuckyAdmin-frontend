@@ -55,7 +55,7 @@ function SalesList(props) {
   }
 
   return (
-    <div>
+    <div className={s.sales__block}>
       <SalesSidebar/>
       <input type="text" placeholder="Поиск по наименованию" value={searchValue} onChange={(e) => {setSearchValue(e.target.value)}}/>
       <div className={s.sales__wrapper}>

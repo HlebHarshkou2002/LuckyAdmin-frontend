@@ -18,16 +18,16 @@ function Products() {
   console.log(products);
 
   return (
-    <div className={s.products__wrapper}>
-      <div className={s.header}>
-        <div className={s.header__item}>Наименование товара</div>
-        <div className={s.header__item}>Цена (BYN)</div>
-        <div className={s.header__item}>Цена поставки (BYN)</div>
-        <div className={s.header__item}>Остаток (Шт)</div>
-        <div className={s.header__item}>Категории</div>
-        <div className={s.header__item}>Удалить/Редактировать</div>
+    <table className={s.products__wrapper} border="1" bordercolor="#f0f0f0">
+      <tr className={s.header}>
+        <th className={s.header__item}>Наименование товара</th>
+        <th className={s.header__item}>Цена (BYN)</th>
+        <th className={s.header__item}>Цена поставки (BYN)</th>
+        <th className={s.header__item}>Остаток (Шт)</th>
+        <th className={s.header__item}>Категории</th>
+        <th className={s.header__item}>Удалить/Редактировать</th>
 
-      </div>
+      </tr>
       {isProductsLoading
         ? "Loading"
         : products.map((product) => {
@@ -49,7 +49,7 @@ function Products() {
               />
             );
           })}
-    </div>
+    </table>
   );
 }
 

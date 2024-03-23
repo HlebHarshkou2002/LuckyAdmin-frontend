@@ -5,26 +5,42 @@ import { fetchProducts, searchByTitle } from "../../redux/slices/products";
 import { useDispatch, useSelector } from "react-redux";
 import SalesSidebar from "../../Components/SalesSidebar/SalesSidebar";
 import axios from "../../redux/axios";
+import { SearchOutlined } from "@ant-design/icons";
+import { Input } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
+import { Button, Divider, Flex, Radio } from "antd";
+import { message, Space } from "antd";
+import { Table, Tag } from "antd";
 
 function SalesList(props) {
   const dispatch = useDispatch();
-  let products= useSelector((state) => state.products.products);
+  let products = useSelector((state) => state.products.products);
   const status = useSelector((state) => state.products.status);
-  const isSalesExist = useSelector((state) => state.products.isSalesExist)
-  let filteredProducts = useSelector((state) => state.products.filteredProducts);
+  const isSalesExist = useSelector((state) => state.products.isSalesExist);
+  let filteredProducts = useSelector(
+    (state) => state.products.filteredProducts
+  );
 
-  const [searchValue, setSearchValue] = useState('')
-  const [filePath, setFilePath] = useState('')
+  const [searchValue, setSearchValue] = useState("");
+  const [filePath, setFilePath] = useState("");
 
+  const [messageApi, contextHolder] = message.useMessage();
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content: "Отчёт сохранён успешно!",
+    });
+  };
 
-  if(filteredProducts.length === 0) {
-    filteredProducts = products
+  if (filteredProducts.length === 0) {
+    filteredProducts = products;
   }
+  console.log(filteredProducts);
 
   const isProductsLoading = status === "loading";
 
   React.useEffect(() => {
-    dispatch(searchByTitle({value: searchValue}));
+    dispatch(searchByTitle({ value: searchValue }));
   }, [searchValue]);
 
   React.useEffect(() => {
@@ -33,69 +49,106 @@ function SalesList(props) {
 
   let sumSaleCount = 0;
   let sumPrice = 0;
-  let saleProductCount = 0
+  let sumCost = 0;
+  let sumRevenue = 0;
+  let saleProductCount = 0;
   if (!isProductsLoading) {
     filteredProducts.map((product) => {
-      saleProductCount = 0
-      for(let sale of product.sales) {
-        saleProductCount += sale.saleCount
+      saleProductCount = 0;
+      for (let sale of product.sales) {
+        saleProductCount += sale.saleCount;
       }
       sumSaleCount += saleProductCount;
       sumPrice += product.price * saleProductCount;
+      sumCost += product.deliveryPrice * saleProductCount;
+      sumRevenue = sumPrice - sumCost;
     });
   }
 
   const saveReportInFile = async () => {
-    const data = await axios.post('/products/report', {products})
-    console.log(data)
-    if(data.data.success === true ) {
-      alert("Отчёт сохранён")
-      setFilePath(data.data.filepath)
+    const data = await axios.post("/products/report", { products });
+    if (data.data.success === true) {
+      success();
+      setFilePath(data.data.filepath);
     }
-  }
+  };
 
   return (
     <div className={s.sales__block}>
-      <SalesSidebar/>
-      <input type="text" placeholder="Поиск по наименованию" value={searchValue} onChange={(e) => {setSearchValue(e.target.value)}}/>
-      <div className={s.sales__wrapper}>
-        <div className={s.header}>
-          <div className={s.header__item}>Наименование товара</div>
-          <div className={s.header__item}>Продажи(Шт)</div>
-          <div className={s.header__item}>Сумма (BYN)</div>
-          <div className={s.header__item}>Категория</div>
-          <div className={s.header__item}>Поставщик</div>
-          <div className={s.header__item}>Дата продажи</div>
-        </div>
+      <SalesSidebar />
+
+      <Input
+        size="large"
+        placeholder="Поиск по наименованию"
+        prefix={<SearchOutlined />}
+        className={s.search__input}
+        value={searchValue}
+        onChange={(e) => {
+          setSearchValue(e.target.value);
+        }}
+      />
+
+      <table className={s.sales__wrapper} border="1" bordercolor="#f0f0f0">
+        <tr className={s.header}>
+          <th className={s.header__item}>Наименование товара</th>
+          <th className={s.header__item}>Продажи(Шт)</th>
+          <th className={s.header__item}>Выручка (BYN)</th>
+          <th className={s.header__item}>Себестоимость (BYN)</th>
+          <th className={s.header__item}>Валовая прибыль (BYN)</th>
+          <th className={s.header__item}>Наценка (%)</th>
+          <th className={s.header__item}>Категория</th>
+          <th className={s.header__item}>Поставщик</th>
+          <th className={s.header__item}>Дата продажи</th>
+        </tr>
         {isProductsLoading
           ? "Loading"
-          : (!isSalesExist ? "Продаж нет" : (filteredProducts.map((product) => {
-            let saleCount = 0
-            product.sales.map(sale => {
-              saleCount += sale.saleCount
-            })
-            return (
-              <Sale
-                title={product.title}
-                saleCount={saleCount}
-                price={product.price}
-                createdAt={product.createdAt}
-                isProductsLoading={isProductsLoading}
-                categories={product.categories}
-                provider={product.provider}
-              />
-            )})))}
+          : !isSalesExist
+          ? "Продаж нет"
+          : filteredProducts.map((product) => {
+              let saleCount = 0;
+              product.sales.map((sale) => {
+                saleCount += sale.saleCount;
+              });
+              return (
+                <Sale
+                  title={product.title}
+                  saleCount={saleCount}
+                  price={product.price}
+                  deliveryPrice={product.deliveryPrice}
+                  createdAt={product.createdAt}
+                  isProductsLoading={isProductsLoading}
+                  categories={product.categories}
+                  provider={product.provider}
+                />
+              );
+            })}
 
-        <div className={s.header}>
-          <div className={s.header__item}>Итого</div>
-          <div className={s.header__item}>{sumSaleCount}</div>
-          <div className={s.header__item}>{sumPrice.toFixed(2)}</div>
-          <div className={s.header__item}></div>
-          <div className={s.header__item}></div>
-          <div className={s.header__item}></div>
-        </div>
+        <tr className={s.header}>
+          <th className={s.header__item}>Итого</th>
+          <th className={s.header__item}>{sumSaleCount}</th>
+          <th className={s.header__item}>{sumPrice.toFixed(2)}</th>
+          <th className={s.header__item}>{sumCost.toFixed(2)}</th>
+          <th className={s.header__item}>{sumRevenue.toFixed(2)}</th>
+          <th className={s.header__item}></th>
+          <th className={s.header__item}></th>
+          <th className={s.header__item}></th>
+          <th className={s.header__item}></th>
+        </tr>
+      </table>
+      {contextHolder}
+      <div className={s.save__report__button}>
+        <Space>
+          <Button
+            type="primary"
+            shape="round"
+            icon={<DownloadOutlined />}
+            size={"medium"}
+            onClick={saveReportInFile}
+          >
+            Сохранить отчёт в файл
+          </Button>
+        </Space>
       </div>
-      <button onClick={saveReportInFile}>Сохранить отчёт в файл</button>
     </div>
   );
 }

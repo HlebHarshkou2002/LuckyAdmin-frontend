@@ -9,9 +9,27 @@ import {
 } from "../../redux/slices/products";
 import { fetchProviders } from "../../redux/slices/providers";
 
-import { DatePicker, Space } from "antd";
+import { DatePicker, Space, ConfigProvider } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Flex, Tooltip } from "antd";
+import { Typography } from "antd";
+import { Checkbox } from "antd";
+import {
+  AppstoreOutlined,
+  FieldTimeOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
+import { Menu } from "antd";
+
+function getItem(label, key, icon, children, type) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  };
+}
 
 const categoriesArray = [
   "Научная литература",
@@ -22,10 +40,11 @@ const categoriesArray = [
   "Зарубежная литература",
   "Право",
 ];
+
 const { RangePicker } = DatePicker;
+const { Title } = Typography;
 
 function SalesSidebar(props) {
-  
   const dispatch = useDispatch();
 
   const [category, setCategory] = React.useState("");
@@ -43,7 +62,7 @@ function SalesSidebar(props) {
     setEndDate(dateString[1]);
   };
 
-  const { providers } = useSelector((state) => state.providers);
+  let { providers } = useSelector((state) => state.providers);
   const isProvidersLoading = providers.status === "loading";
 
   const onDateFilter = () => {
@@ -82,66 +101,90 @@ function SalesSidebar(props) {
     dispatch(fetchProviders());
   }, []);
 
-  return (
-    <div className={s.block__wrapper}>
-      <div>
+  if (!isProvidersLoading) {
+    providers = providers.items.data.map((provider) => {
+      return getItem(
+        <Checkbox value={provider.providerName} onChange={handleChangeProvider}>
+          {provider.providerName}
+        </Checkbox>,
+        provider.providerName
+      );
+    });
+  } else {
+    providers = [getItem("Loading", "loading")];
+  }
+
+  const items = [
+    getItem("Период", "sub1", <FieldTimeOutlined />, [
+      getItem(
         <div>
-          <h2>Период</h2>
-          {/* <Space direction="vertical">
-            <DatePicker onChange={onChangeStartDate} placeholder="Начало периода"/>
+          <Space direction="vertical" size={12} className={s.date__input}>
+            <RangePicker onChange={onChangeDate} />
           </Space>
-          <Space direction="vertical">
-            <DatePicker onChange={onChangeEndDate} placeholder="Конец периода"/>
-          </Space> */}
-          <Space direction="vertical" size={12}>
-            <RangePicker onChange={onChangeDate}/>
-          </Space>
+        </div>,
+        "g1"
+      ),
+      getItem(
+        <div>
           <Flex gap="small" vertical>
             <Flex wrap="wrap" gap="small">
-              <Button type="primary" icon={<SearchOutlined />} onClick={onDateFilter}>
-                Search
+              <Button
+                type="primary"
+                icon={<SearchOutlined />}
+                onClick={onDateFilter}
+              >
+                Поиск
               </Button>
             </Flex>
           </Flex>
-          {/* <button onClick={onDateFilter}>Искать</button> */}
         </div>
-        <div>
-          <h2>Категории</h2>
-          {categoriesArray.map((category) => {
-            return (
-              <div>
-                <input
-                  type="checkbox"
-                  id="category"
-                  name={category}
-                  value={category}
-                  onChange={handleChangeCategory}
-                />
-                <label for="category">{category}</label>
-              </div>
-            );
-          })}
-        </div>
-        <div>
-          <h2>Поставщики</h2>
-          {isProvidersLoading
-            ? "Loading"
-            : providers.items.data.map((provider) => {
-                return (
-                  <div>
-                    <input
-                      type="checkbox"
-                      id="provider"
-                      name={provider.providerName}
-                      value={provider.providerName}
-                      onChange={handleChangeProvider}
-                    />
-                    <label for="provider">{provider.providerName}</label>
-                  </div>
-                );
-              })}
-        </div>
-      </div>
+      ),
+    ]),
+    {
+      type: "divider",
+    },
+    getItem(
+      "Категории",
+      "sub2",
+      <AppstoreOutlined />,
+      categoriesArray.map((category) => {
+        return getItem(
+          <Checkbox value={category} onChange={handleChangeCategory}>
+            {category}
+          </Checkbox>,
+          category
+        );
+      })
+    ),
+    {
+      type: "divider",
+    },
+    getItem("Поставщики", "sub3", <TeamOutlined />, providers),
+  ];
+
+  return (
+    <div className={s.block__wrapper}>
+      <ConfigProvider
+        theme={{
+          components: {
+            Menu: {
+              itemHoverBg: "#fafafa",
+              itemSelectedBg: "#fafafa",
+            },
+          },
+        }}
+      >
+        <Menu
+          style={{
+            width: 256,
+          }}
+          defaultSelectedKeys={["1"]}
+          defaultOpenKeys={["sub1"]}
+          mode="inline"
+          inlineIndent={0}
+          items={items}
+        />
+      </ConfigProvider>
     </div>
   );
 }

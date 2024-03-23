@@ -1,19 +1,29 @@
 .sales__block {
-  margin-right: 200px;
+
+  .search__input {
+    width: 40%;
+    margin-bottom: 10px;
+  }
+  
   .sales__wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
+    border-collapse: collapse;
+    border-radius: 10px;
+    width: 100%;
     .header {
-      display: flex;
-    }
+      background-color: #fafafa;
 
-    .header__item {
-      border-right: 1px solid #f1f1f1;
 
-      color: white;
-      background-color: #212121;
-      width: 300px;
-      padding: 5px;
+      .header__item {
+        text-align: left;
+        font-weight: 600;
+        padding: 15px 10px 15px 5px; 
+      }
     }
+  }
+
+  .save__report__button {
+    margin-top: 20px;
+    margin-right: 80px;
+    float: right;
   }
 }

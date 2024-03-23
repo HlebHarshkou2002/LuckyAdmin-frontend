@@ -2,27 +2,12 @@
   max-width: 1280px;
   margin: 0 auto;
 
-  .account__header__wrapper {
-
-    .account__header {
+  .account__header {
+    display: flex;
+    justify-content: flex-end;
+    .email__info {
       display: flex;
-      justify-content:flex-end;
-      .auth__info {
-
-      }
-
-      .email__info {
-        display: flex;
-        align-items: center;
-      }
-
-      .logout__btn, .admin__btn{
-
-        &:hover {
-        }
-      }
-
+      align-items: center;
     }
   }
-
 }

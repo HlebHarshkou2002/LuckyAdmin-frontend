@@ -1,22 +1,43 @@
 .board__block {
-    box-sizing: border-box;
-    max-width: 200px;
-    max-height: 100px;
-    width: 100%;
-    min-width: 150px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 14px 3px silver;
-    text-align: center;
-    padding: 10px;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 310px;
+  min-height: 130px;
+  padding: 20px;
+  border-radius: 10px;
 
-    h2 {
-        font-size: 16px;
-        font-weight: 400;
-    }
+  color: white;
+  background: rgb(186,94,243);
+  background: linear-gradient(56deg, rgba(186,94,243,1) 0%, rgba(79,81,232,1) 53%, rgba(63,219,255,1) 100%);
 
-    .board__index {
-        font-size: 24px;
-        color: rgb(0, 180, 0);
-        font-weight: 500;
-    }
+  border: 1px solid #f2f2f2;
+
+  .board__icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    background-color: rgba(79,81,232,0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+
+  }
+
+  .board__title {
+    color: white;
+    opacity: 0.5;
+  }
+
+  .board__index {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .info__icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
 }

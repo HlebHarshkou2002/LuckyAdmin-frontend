@@ -1,44 +1,24 @@
 .product__wrapper {
-    display: flex;
+  &:hover {
+    background-color: #fafafa;
+  }
+  td {
+    padding: 10px;
 
-    &:nth-child(2n) {
-            background-color: #f1f1f1;
+    input {
+      border: none;
+      outline: none;
     }
 
-    div {
-        border-right: 1px solid #f1f1f1;
-        width: 155px;
-        padding: 5px;
-
-
-        text-align: right;
-
-        input {
-            width: 130px;
-        }
-
-        &:first-child {
-            text-align: left;
-        }
-
+    .buttons__wrapper {
+      display: flex;
+      justify-content: center;
+      .remove__btn,
+      .edit__btn {
+        margin-right: 10px;
+        cursor: pointer;
+        font-size: 20px;
+      }
     }
-
-    .remove__btn, .edit__btn {
-        background-color: black;
-        color: white;
-        border: none;
-        font-size: 15px;
-        width: 50px;
-        height: 20px;
-        margin-right: 5px;
-
-        &:hover {
-            cursor: pointer;
-            color: black;
-            background-color: white;
-        }
-    }
-
-    
-
+  }
 }

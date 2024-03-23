@@ -5,6 +5,14 @@ import { Navigate } from "react-router-dom";
 import axios from "../../../redux/axios";
 import s from "./Product.module.scss";
 
+import { Button, Popconfirm, message } from "antd";
+import { notification, Space } from "antd";
+import {
+  CloseCircleOutlined,
+  EditOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
+
 function Product(props) {
   const [title, setTitle] = React.useState(props.title);
   const [price, setPrice] = React.useState(props.price);
@@ -18,41 +26,61 @@ function Product(props) {
   const [complexity, setComplexity] = React.useState(props.complexity);
   const [rating, setRating] = React.useState(props.rating);
 
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationUpdate = (type) => {
+    api[type]({
+      message: "Выполнено!",
+      description: "Товар успешно обновлён!",
+    });
+  };
+
+  const openNotificationDelete = (type) => {
+    api[type]({
+      message: "Выполнено!",
+      description: "Товар успешно удалён!",
+    });
+  };
+
   const onEdit = async () => {
-    if (window.confirm("Вы действительно хотите обновить товар")) {
-      try {
-        const fields = {
-          title,
-          price,
-          description,
-          author,
-          imgUrl,
-          genres,
-          ageRestriction,
-          complexity,
-          rating,
-        };
-        console.log(fields);
-        const { data } = await axios.patch(`/products/${props._id}`, fields);
-      } catch (err) {
-        console.log(err);
+    try {
+      const fields = {
+        title,
+        price,
+        description,
+        author,
+        imgUrl,
+        genres,
+        ageRestriction,
+        complexity,
+        rating,
+      };
+      console.log(fields);
+      const { data } = await axios.patch(`/products/${props._id}`, fields);
+      if (data) {
+        openNotificationUpdate("success");
       }
+    } catch (err) {
+      console.log(err);
     }
   };
 
   const dispatch = useDispatch();
 
-  const removeProduct = async () => {
-    if (window.confirm("Вы действительно хотите удалить товар")) {
-      debugger;
+  const confirmDeleteProduct = async (e) => {
+    try {
+      // openNotificationDelete("success");
       dispatch(fetchRemoveProduct(props._id));
-      console.log(props._id);
+      message.success('Товар успешно удалён!');
+    } catch (err) {
+      console.log(err);
     }
+  };
+  const cancelDeleteProduct = async (e) => {
   };
 
   return (
-    <div className={s.product__wrapper}>
-      <div>
+    <tr className={s.product__wrapper}>
+      <td>
         <input
           type="text"
           placeholder="title"
@@ -60,22 +88,47 @@ function Product(props) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-      </div>
-      <div>
-        <input type="number" placeholder="price" name="price" value={price} onChange={(e) => setPrice(e.target.value)}/>{" "}
-      </div>
-      <div>{props.deliveryPrice}</div>
-      <div>{props.storeCount}</div>
-      <div>{props.categories.join(", ")}</div>
-      <div>
-        <button className={s.remove__btn} onClick={removeProduct}>
-          -
-        </button>
-        <button className={s.edit__btn} onClick={onEdit}>
-          ...edit
-        </button>
-      </div>
-    </div>
+      </td>
+      <td>
+        <input
+          type="number"
+          placeholder="price"
+          name="price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />{" "}
+      </td>
+      <td>{props.deliveryPrice}</td>
+      <td>{props.storeCount}</td>
+      <td>{props.categories.join(", ")}</td>
+      <td>
+        <div className={s.buttons__wrapper}>
+          <div className={s.remove__btn}>
+            <Popconfirm
+              title="Удаление товара"
+              description="Вы уверены, что хотите удалить товар?"
+              onConfirm={confirmDeleteProduct}
+              onCancel={cancelDeleteProduct}
+              icon={
+                <QuestionCircleOutlined
+                  style={{
+                    color: "red",
+                  }}
+                />
+              }
+              okText="Да"
+              cancelText="Нет"
+            >
+              <CloseCircleOutlined style={{ color: "red" }} />
+            </Popconfirm>
+          </div>
+          <div className={s.edit__btn} onClick={onEdit}>
+            {contextHolder}
+            <EditOutlined />
+          </div>
+        </div>
+      </td>
+    </tr>
   );
 }
 

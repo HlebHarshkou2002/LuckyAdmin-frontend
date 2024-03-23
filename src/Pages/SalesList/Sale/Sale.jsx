@@ -4,29 +4,42 @@ import s from "./Sale.module.scss"
 function Sale(props) {
     let date = new Date(props.createdAt)
 
+    let revenue = (props.price * props.saleCount).toFixed(2);
+    let cost = (props.deliveryPrice * props.saleCount).toFixed(2);
+    let profit = (revenue - cost).toFixed(2);
+    let markup = (((props.price - props.deliveryPrice) / props.deliveryPrice )* 100).toFixed(2)
     return(
-        <div className={s.sale__wrapper}>
-            <div>
+        <tr className={s.sale__wrapper}>
+            <td>
                 {props.title}
-            </div>
-            <div>
+            </td>
+            <td>
                 {props.saleCount}
-            </div>
-            <div>
-                {(props.price * props.saleCount).toFixed(2)}
-            </div>
-            <div>
+            </td>
+            <td>
+                {revenue}
+            </td>
+            <td>
+                {cost}
+            </td>
+            <td>
+                {profit}
+            </td>
+            <td>
+                {markup}
+            </td>
+            <td>
                 {props.categories}
-            </div>
-            <div>
+            </td>
+            <td>
                 {props.provider === null ? "Не поставляется" : props.provider.providerName}
-            </div>
-            <div>
+            </td>
+            <td>
                 {date.getDate() + "."}
                 {date.getMonth() + "."}
                 {date.getFullYear()}
-            </div>
-        </div>
+            </td>
+        </tr>
     )
 }
 

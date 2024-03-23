@@ -10,8 +10,8 @@ function LineChart(props) {
       {
         data: props.salesProfitArray,
         label: "Сумма(BYN)",
-        borderColor: "#fafa",
-        backgroundColor: "rgba(20, 200, 20, 0.5)",
+        borderColor: "rgba(100, 100, 255)",
+        backgroundColor: "rgba(74, 8, 255, 0.5)",
         fill: true,
       },
     ],

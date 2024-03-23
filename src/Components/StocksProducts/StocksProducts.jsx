@@ -30,7 +30,7 @@ function StocksProducts() {
                   storeCount={product.storeCount}
                   price={product.price}
                   deliveryPrice={product.deliveryPrice}
-                  providerName={product.provider.providerName}
+                  providerName={product.provider?.providerName}
                   saleCount = {product.saleCount}
                 />
               );

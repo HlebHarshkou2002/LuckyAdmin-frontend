@@ -30,7 +30,8 @@ function PieChart(props) {
     datasets: [
       {
         data: salesByCategories,
-        label: "Продажи(Шт)"
+        label: "Продажи(Шт)",
+        backgroundColor: ["#B0E0E6", "#4169E1", "#7B68EE", "#00BFFF", "#4682B4", "#00FFFF", "#E0FFFF"]
       },
     ],
   };

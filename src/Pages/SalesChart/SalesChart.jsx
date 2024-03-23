@@ -10,6 +10,9 @@ import BarChart from "./BarChart/BarChart";
 import PieChart from "./PieChart/PieChart";
 import SaleBoard from "../../Components/SaleBoard/SaleBoard";
 
+import { DollarOutlined, BarChartOutlined, CreditCardOutlined, MonitorOutlined } from '@ant-design/icons';
+
+
 const SalesChart = () => {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.products.products);
@@ -144,6 +147,8 @@ const SalesChart = () => {
                 title={"Прибыль"}
                 value={income}
                 calculation={"BYN"}
+
+                boardImg={<DollarOutlined style={{ fontSize: '26px'}}/>}
               />
             </div>
             <div>
@@ -151,29 +156,34 @@ const SalesChart = () => {
                 title={"Количество продаж"}
                 value={sumCountOfSales}
                 calculation={"Шт"}
+                boardImg={<BarChartOutlined style={{ fontSize: '26px'}}/>}
+
               />
             </div>
-            <div>
+            {/* <div>
               <SaleBoard
                 title={"ВП/Шт"}
                 value={profitPerCount}
                 calculation={"ВП/Шт"}
+                boardImg={<MonitorOutlined style={{ fontSize: '30px'}}/>}
+
               />
-            </div>
+            </div> */}
             <div>
               <SaleBoard
                 title={"Выручка"}
                 value={sumOfProfit}
                 calculation={"BYN"}
+                boardImg={<CreditCardOutlined style={{ fontSize: '26px'}}/>}
               />
             </div>
-            <div>
+            {/* <div>
               <SaleBoard
                 title={"Себестоимость"}
                 value={sumCostPrice}
                 calculation={"BYN"}
               />
-            </div>
+            </div> */}
           </div>
           <LineChart
             datesOfSale={datesOfSale}

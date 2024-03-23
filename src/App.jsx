@@ -18,7 +18,6 @@ import CreateSupply from "./Pages/CreateSupply/CreateSupply";
 import AllProducts from "./Pages/AllProducts/AllProducts";
 import SalesList from "./Pages/SalesList/SalesList";
 import CommodityStocks from "./Pages/CommodityStocks/CommodityStocks";
-
 import {
   FileOutlined,
   TeamOutlined,
@@ -30,10 +29,10 @@ import {
   ClusterOutlined,
   ContactsOutlined,
 } from "@ant-design/icons";
-
 import HeaderContainer from "./Components/Header/Header";
-
 import { Breadcrumb, Layout, Menu, theme } from "antd";
+
+
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {

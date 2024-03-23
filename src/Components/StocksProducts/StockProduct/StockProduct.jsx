@@ -18,7 +18,7 @@ function StockProduct(props) {
                 {props.storeCount * props.deliveryPrice}
             </div>
             <div>
-                {props.providerName}
+                {props.providerName ? props.providerName : "Не поставляется"}
             </div>
             <div>
                 {Math.floor((props.storeCount * 30) / props.saleCount)}

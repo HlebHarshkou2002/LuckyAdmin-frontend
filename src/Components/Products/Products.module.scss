@@ -1,16 +1,16 @@
 .products__wrapper {
-    max-width: 80%;
+  max-width: 80%;
+  margin-right: 50px;
+  border-collapse: collapse;
 
-    .header {
-        display: flex;
-      }
-    
-      .header__item {
-        border-right: 1px solid #f1f1f1;
-    
-        color: white;
-        background-color: #212121;
-        width: 155px;
-        padding: 5px;
-      }
+  .header {
+    background-color: #fafafa;
+    .header__item {
+      text-align: left;
+      font-weight: 600;
+      padding: 15px 10px 15px 5px; 
+    }
+  }
+
+
 }

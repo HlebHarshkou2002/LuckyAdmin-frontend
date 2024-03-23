@@ -2,44 +2,19 @@
     width: 20%;
     div {
         display: flex;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         width: 100%;
-
-        label {
-            margin-right: 20px;
-            font-weight: 900;
-            width: 200px;
-        }
         input {
-            outline: none;
-            padding: 5px;
-            height: 30px;
             width: 100%;
-            border: 1px solid #f1f1f1;
             font-size: 16px;
-            &:hover {
-                border: 1px solid #f1f1f1;
-            }
         }
+
+        .select__category {
+            font-size: 16px;
+        }
+
         button {
-            width: 248px;
-            height: 52px;
-            margin-top: 47px;
-
-            text-transform: uppercase;
-            color: white;
-            font-size: 22px;
-            font-weight: 100;
-            letter-spacing: 1.5px;
-
-            background-color: #212121;
-            border: 1px solid transparent;
-            &:hover {
-                color: #212121;
-                cursor: pointer;
-                background-color: white;
-                border: 1px solid #212121;
-            }
+            margin-top: 20px;
         }
     }
 }

@@ -9,8 +9,9 @@
     }
 
     .dashboard {
-        display: flex;
         justify-content: space-around;
+        flex-wrap: wrap;
+        display: flex;
         margin-bottom: 30px;
     }
 }

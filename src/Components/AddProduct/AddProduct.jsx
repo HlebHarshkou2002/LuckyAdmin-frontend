@@ -2,6 +2,14 @@ import axios from "../../redux/axios";
 import React from "react";
 import s from "./AddProduct.module.scss";
 
+import { Input } from "antd";
+import { Select } from "antd";
+import { Button, Flex } from "antd";
+
+import { notification, Space } from "antd";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/slices/products";
+
 function AddProduct() {
   const [title, setTitle] = React.useState("");
   const [price, setPrice] = React.useState("");
@@ -13,7 +21,25 @@ function AddProduct() {
   const [complexity, setComplexity] = React.useState("");
   const [rating, setRating] = React.useState("");
 
-  const categoriesArray = ["Научная литература", "Программирование", "Предпринимательская деятельность", "Дизайн и искусство", "Языки", "Зарубежная литература", "Право"];
+  const dispatch = useDispatch();
+
+  const categoriesArray = [
+    "Научная литература",
+    "Программирование",
+    "Предпринимательская деятельность",
+    "Дизайн и искусство",
+    "Языки",
+    "Зарубежная литература",
+    "Право",
+  ];
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationCreate = (type) => {
+    api[type]({
+      message: "Выполнено!",
+      description: "Товар успешно добавлен!",
+    });
+  };
 
   const onSubmit = async () => {
     try {
@@ -24,107 +50,125 @@ function AddProduct() {
         description,
         author,
         imgUrl,
-        categories,
+        categories: [categories],
         ageRestriction,
         storeCount,
         complexity,
         rating,
+        deliveryPrice: 0
       };
       const { data } = await axios.post("/products", fields);
       if (data) {
-        alert("Товар создан!");
+        openNotificationCreate("success");
+        dispatch(addProduct({fields: fields}))
       }
     } catch (err) {
       console.log(err);
     }
   };
 
+  const onChangeCategories = (value) => {
+    setCategories(value);
+  };
+
+  const filterOption = (input, option) =>
+    (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+
   console.log();
   return (
     <div className={s.block__wrapper}>
+      {contextHolder}
       <div>
-        <input
+        <Input
           type="text"
-          placeholder="title"
+          placeholder="Наименование товара"
           name="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
       <div>
-        <input
+        <Input
           type="number"
-          placeholder="price"
+          placeholder="Отпускная цена"
           name="price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
       </div>
       <div>
-        <input
+        <Input
           type="text"
-          placeholder="description"
+          placeholder="Описание товара"
           name="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
       <div>
-        <input
+        <Input
           type="text"
-          placeholder="author"
+          placeholder="Производитель"
           name="author"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
       </div>
       <div>
-        <input
+        <Input
           type="text"
-          placeholder="imgUrl"
+          placeholder="Ссылка на фото"
           name="imgUrl"
           value={imgUrl}
           onChange={(e) => setImgUrl(e.target.value)}
         />
       </div>
       <div>
-        <select name="categories" id="" onChange={(e) => setCategories(e.target.value)}> 
-          {categoriesArray.map((item) => {
-            return(
-                <option value={item}>{item}</option>
-            )
-          })}
-        </select>
+        <Select
+          showSearch
+          placeholder="Выберите категорию"
+          optionFilterProp="category"
+          filterOption={filterOption}
+          options={categoriesArray.map((item) => ({
+            label: item,
+            value: item,
+          }))}
+          name="categories"
+          onChange={onChangeCategories}
+          className={s.select__category}
+        />
       </div>
       <div>
-        <input
+        <Input
           type="number"
-          placeholder="ageRestriction"
+          placeholder="Возрастное ограничение"
           name="ageRestriction"
           value={ageRestriction}
           onChange={(e) => setAgeRestriction(e.target.value)}
         />
       </div>
       <div>
-        <input
+        <Input
           type="text"
-          placeholder="complexity"
+          placeholder="Сложность"
           name="complexity"
           value={complexity}
           onChange={(e) => setComplexity(e.target.value)}
         />
       </div>
       <div>
-        <input
+        <Input
           type="number"
-          placeholder="rating"
+          placeholder="Рейтинг"
           name="rating"
           value={rating}
           onChange={(e) => setRating(e.target.value)}
         />
       </div>
       <div>
-        <button onClick={onSubmit}>Create Product</button>
+        <Flex gap="small" wrap="wrap">
+          <Button type="primary" onClick={onSubmit} size="large">Добавить товар</Button>
+        </Flex>
       </div>
     </div>
   );

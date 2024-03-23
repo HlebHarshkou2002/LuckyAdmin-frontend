@@ -178,6 +178,14 @@ const productsSlice = createSlice({
         filteredProducts
       };
     },
+    addProduct: (state, action) => {
+      let newProducts = [...state.products];
+      newProducts.push(action.payload.fields)
+      return {
+        ...state,
+        products: newProducts
+      };
+    }
   },
   extraReducers: {
     //Получение товаров
@@ -196,11 +204,11 @@ const productsSlice = createSlice({
 
     //Удаление товара
     [fetchRemoveProduct.pending]: (state, action) => {
-      debugger;
       state.products = state.products.filter(
-        (obj) => obj.id !== action.meta.arg
+        (obj) => obj._id !== action.meta.arg
       );
-    },
+      state.status = "loaded";
+    }
   },
 });
 
@@ -210,3 +218,4 @@ export const { filterByCategory } = productsSlice.actions;
 export const { filterByProvider } = productsSlice.actions;
 export const { searchByTitle } = productsSlice.actions;
 export const { filterByDate } = productsSlice.actions;
+export const { addProduct } = productsSlice.actions;

@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 
 import { logout, selectIsAuth } from "../../redux/slices/auth";
+
 import { UserOutlined } from "@ant-design/icons";
 
 import { Avatar, Space, Dropdown, Button } from "antd";
-
 import { LogoutOutlined, SettingOutlined } from "@ant-design/icons";
 
 function HeaderContainer(props) {
@@ -71,21 +71,18 @@ function HeaderContainer(props) {
 
   return (
     <div className={s.header__wrapper}>
-      <div className={s.account__header__wrapper}>
-        <div className={s.account__header}>
-          <div className={s.email__info}>
-            <Space wrap size={14}>
-              <Dropdown
-                menu={{
-                  items,
-                }}
-                placement="bottomRight"
-              >
-                <Avatar size={40} icon={<UserOutlined />} />
-              </Dropdown>
-            </Space>
-          </div>
-          <div></div>
+      <div className={s.account__header}>
+        <div>
+          <Space wrap size={14}>
+            <Dropdown
+              menu={{
+                items,
+              }}
+              placement="bottomRight"
+            >
+              <Avatar size={40} icon={<UserOutlined />} />
+            </Dropdown>
+          </Space>
         </div>
       </div>
     </div>

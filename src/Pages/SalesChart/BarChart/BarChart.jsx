@@ -10,7 +10,7 @@ function BarChart(props) {
         data: props.salesArray,
         label: "Продажи(Шт)",
         borderColor: "#3333ff",
-        backgroundColor: "rgba(255, 0, 0, 0.5)",
+        backgroundColor: "rgba(66, 142, 255, 0.6)",
         fill: true,
       },
     ],

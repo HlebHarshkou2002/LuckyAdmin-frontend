@@ -26,7 +26,7 @@ function Sale(props) {
                 {profit}
             </td>
             <td>
-                {markup}
+                {props.deliveryPrice === 0 ? 0 : markup}
             </td>
             <td>
                 {props.categories}

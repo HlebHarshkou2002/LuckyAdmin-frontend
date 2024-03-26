@@ -8,11 +8,7 @@ import { usersReducer } from "./slices/users";
 import { suppliesReducer } from "./slices/supplies";
 import { providersReducer } from "./slices/providers";
 
-// const rootReducer = combineReducers({
-//     products: productsReducer
-//   })
-
-const store = configureStore({
+export const store = configureStore({
     reducer: {
         products: productsReducer,
         auth: authReducer,

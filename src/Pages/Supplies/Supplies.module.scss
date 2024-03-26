@@ -1,15 +1,16 @@
-.products__block {
-  width: 80%;
-  margin-right: 20px;
-  align-self: flex-start;
-
+.supply__block {
   border-collapse: collapse;
+  width: 100%;
   .header {
     background-color: #fafafa;
     .header__item {
       text-align: left;
       font-weight: 600;
       padding: 15px 10px 15px 5px;
+    }
+
+    .header__item:last-child {
+      width: 183px;
     }
   }
 }

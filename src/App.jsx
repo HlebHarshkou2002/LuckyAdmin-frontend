@@ -6,7 +6,7 @@ import "./App.scss";
 
 import Login from "./Pages/Login/Login";
 
-import { useDispatch, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
 
 import SalesChart from "./Pages/SalesChart/SalesChart";
@@ -31,7 +31,7 @@ import {
 } from "@ant-design/icons";
 import HeaderContainer from "./Components/Header/Header";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
-
+import store from "./redux/store";
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -86,93 +86,98 @@ function App() {
   } = theme.useToken();
 
   return (
-    <BrowserRouter>
-      <Layout style={{ minHeight: "100vh" }}>
-        <Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
-          theme="light"
-        >
-          <div className="demo-logo-vertical" />
-          <Menu
+    <Provider store={store}>
+      <BrowserRouter>
+        <Layout style={{ minHeight: "100vh" }}>
+          <Sider
+            collapsible
+            collapsed={collapsed}
+            onCollapse={(value) => setCollapsed(value)}
             theme="light"
-            defaultSelectedKeys={["1"]}
-            mode="inline"
-            items={items}
-          />
-        </Sider>
-        <Layout>
-          <Header style={{ padding: 0, background: "white" }}>
-            <HeaderContainer
-              email={userData.data?.email}
-              fullName={userData.data?.fullName}
-            />
-          </Header>
-
-          <Content
-            style={{
-              margin: "0 16px",
-            }}
           >
-            <Breadcrumb
+            <div className="demo-logo-vertical" />
+            <Menu
+              theme="light"
+              defaultSelectedKeys={["1"]}
+              mode="inline"
+              items={items}
+            />
+          </Sider>
+          <Layout>
+            <Header style={{ padding: 0, background: "white" }}>
+              <HeaderContainer
+                email={userData.data?.email}
+                fullName={userData.data?.fullName}
+              />
+            </Header>
+
+            <Content
               style={{
-                margin: "16px 0",
+                margin: "0 16px",
               }}
             >
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
-            </Breadcrumb>
-            <div
-              style={{
-                padding: 24,
-                minHeight: 360,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG,
-              }}
-            >
-              <div className="App">
-                <div className="container">
-                  {/* <Header
+              <Breadcrumb
+                style={{
+                  margin: "16px 0",
+                }}
+              >
+                <Breadcrumb.Item>User</Breadcrumb.Item>
+                <Breadcrumb.Item>Bill</Breadcrumb.Item>
+              </Breadcrumb>
+              <div
+                style={{
+                  padding: 24,
+                  minHeight: 360,
+                  background: colorBgContainer,
+                  borderRadius: borderRadiusLG,
+                }}
+              >
+                <div className="App">
+                  <div className="container">
+                    {/* <Header
               email={userData.data?.email}
             /> */}
-                  {isAuth ? (
-                    <Routes>
-                      <Route path="/login" element={<Login />} />
+                    {isAuth ? (
+                      <Routes>
+                        <Route path="/login" element={<Login />} />
 
-                      {/* Admin */}
-                      {/* <Route path="/" element={<AdminPanel />} /> */}
-                      <Route path="/products" element={<AllProducts />} />
-                      <Route path="/admin/analysis" element={<SalesChart />} />
-                      <Route path="/admin/sales" element={<SalesList />} />
-                      <Route path="/admin/users" element={<Users />} />
-                      <Route path="/supplies" element={<Supplies />} />
-                      <Route path="/supplies/:id" element={<FullSupply />} />
-                      <Route path="/providers" element={<Providers />} />
-                      <Route
-                        path="/admin/add-supply"
-                        element={<CreateSupply />}
-                      />
-                      <Route path="/stocks" element={<CommodityStocks />} />
-                    </Routes>
-                  ) : (
-                    "Требуется авторизация"
-                  )}
+                        {/* Admin */}
+                        {/* <Route path="/" element={<AdminPanel />} /> */}
+                        <Route path="/products" element={<AllProducts />} />
+                        <Route
+                          path="/admin/analysis"
+                          element={<SalesChart />}
+                        />
+                        <Route path="/admin/sales" element={<SalesList />} />
+                        <Route path="/admin/users" element={<Users />} />
+                        <Route path="/supplies" element={<Supplies />} />
+                        <Route path="/supplies/:id" element={<FullSupply />} />
+                        <Route path="/providers" element={<Providers />} />
+                        <Route
+                          path="/admin/add-supply"
+                          element={<CreateSupply />}
+                        />
+                        <Route path="/stocks" element={<CommodityStocks />} />
+                      </Routes>
+                    ) : (
+                      "Требуется авторизация"
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </Content>
-          
-          <Footer
-            style={{
-              textAlign: "center",
-            }}
-          >
-            Lucky ©{new Date().getFullYear()} Created by Gleb Gorshkov
-          </Footer>
+            </Content>
+
+            <Footer
+              style={{
+                textAlign: "center",
+              }}
+            >
+              Lucky ©{new Date().getFullYear()} Created by Gleb Gorshkov
+            </Footer>
+          </Layout>
         </Layout>
-      </Layout>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

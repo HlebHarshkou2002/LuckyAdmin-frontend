@@ -1,9 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SupplyProduct from "./SupplyProduct/SupplyProduct";
-import s from "./SupplyProducts.module.scss"
+import s from "./SupplyProducts.module.scss";
 import { fetchProducts } from "../../redux/slices/products";
-
 
 function SupplyProducts(props) {
   const dispatch = useDispatch();
@@ -17,7 +16,16 @@ function SupplyProducts(props) {
   }, []);
 
   return (
-    <div className={s.products__block}>
+    <table className={s.products__block} border="1" bordercolor="#f0f0f0">
+      <tr className={s.header}>
+        <th className={s.header__item}>Наименование товара</th>
+        <th className={s.header__item}>Отпускная цена(BYN)</th>
+        <th className={s.header__item}>Остаток(Шт)</th>
+        <th className={s.header__item}>Категория</th>
+        <th className={s.header__item}>Кол-во заказа(Шт)</th>
+        <th className={s.header__item}>Цена поставки на товар(BYN)</th>
+        <th className={s.header__item}>Добавить в поставку</th>
+      </tr>
       {isProductsLoading
         ? "Loading"
         : products.map((product) => {
@@ -39,7 +47,7 @@ function SupplyProducts(props) {
               />
             );
           })}
-    </div>
+    </table>
   );
 }
 

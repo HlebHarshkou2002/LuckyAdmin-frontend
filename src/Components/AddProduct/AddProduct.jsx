@@ -74,7 +74,6 @@ function AddProduct() {
   const filterOption = (input, option) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
-  console.log();
   return (
     <div className={s.block__wrapper}>
       {contextHolder}

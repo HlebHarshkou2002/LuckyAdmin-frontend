@@ -1,16 +1,24 @@
 .supply__block {
-    width: 70%;
-    display: flex;
-    justify-content: space-between;
-    background-color: #f2f2f2;
-    padding: 10px;
-    div{
-        img {
-            width: 30px;
+    &:hover {
+        background-color: #fafafa;
+    }
+    td {
+        padding: 10px;
 
-            &:hover {
-                cursor: pointer;
-            }
+        .status__success {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 100%;
+            background-color: green;
+        }
+
+        .status__process {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 100%;
+            background-color: yellow;
         }
     }
 }

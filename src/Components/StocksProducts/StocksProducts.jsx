@@ -12,15 +12,15 @@ function StocksProducts() {
 
   return (
     <div>
-      <div className={s.sales__wrapper}>
-        <div className={s.header}>
-          <div className={s.header__item}>Наименование товара</div>
-          <div className={s.header__item}>Остаток(Шт)</div>
-          <div className={s.header__item}>Остаток(BYN)</div>
-          <div className={s.header__item}>Себестоимость(BYN)</div>
-          <div className={s.header__item}>Поставщик</div>
-          <div className={s.header__item}>Товарный запас(Дн)</div>
-        </div>
+      <table className={s.sales__wrapper} border="1" bordercolor="#f0f0f0">
+        <tr className={s.header}>
+          <th className={s.header__item}>Наименование товара</th>
+          <th className={s.header__item}>Остаток(Шт)</th>
+          <th className={s.header__item}>Остаток(BYN)</th>
+          <th className={s.header__item}>Себестоимость(BYN)</th>
+          <th className={s.header__item}>Поставщик</th>
+          <th className={s.header__item}>Товарный запас(Дн)</th>
+        </tr>
         {isProductsLoading
           ? "Loading"
           : products.map((product) => {
@@ -36,15 +36,15 @@ function StocksProducts() {
               );
             })}
 
-        <div className={s.header}>
-          <div className={s.header__item}>Итого</div>
-          <div className={s.header__item}></div>
-          <div className={s.header__item}></div>
-          <div className={s.header__item}></div>
-          <div className={s.header__item}></div>
-          <div className={s.header__item}></div>
-        </div>
-      </div>
+        <tr className={s.header}>
+          <th className={s.header__item}>Итого</th>
+          <th className={s.header__item}></th>
+          <th className={s.header__item}></th>
+          <th className={s.header__item}></th>
+          <th className={s.header__item}></th>
+          <th className={s.header__item}></th>
+        </tr>
+      </table>
     </div>
   );
 }

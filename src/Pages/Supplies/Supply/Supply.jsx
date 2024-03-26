@@ -2,43 +2,76 @@ import React from "react";
 import s from "./Supply.module.scss";
 import { NavLink } from "react-router-dom";
 
-import CheckMark from '../../../images/Supplies/zelenaja-galochka.png'
 import axios from "../../../redux/axios";
 
+import { notification } from "antd";
+import { Button, Flex } from "antd";
+import { CheckCircleOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { approveSupplyStatus } from "../../../redux/slices/supplies";
+
 function Supply(props) {
+  const dispatch = useDispatch();
   let date = new Date(props.dateOfDelivery);
 
+  const openNotification = (type) => {
+    api[type]({
+      message: "Выполнено!",
+      description: "Поставка успешно принята!",
+    });
+  };
 
   const approveSupply = () => {
     try {
-      let fields = {id: props.id}
-      axios.patch('/supplies', fields)
-      alert("Поставка успешно принята!")
-    } catch(err) {
-      alert("Не удалось провести поставку")
+      let fields = { id: props.id };
+      axios.patch("/supplies", fields);
+
+      dispatch(approveSupplyStatus(fields));
+      openNotification("success");
+    } catch (err) {
+      alert("Не удалось провести поставку");
     }
+  };
 
-  }
-
+  const [api, contextHolder] = notification.useNotification();
 
   return (
-    <div className={s.supply__block}>
-      <div>
+    <tr className={s.supply__block}>
+      {contextHolder}
+      <td>
         <NavLink to={`/supplies/${props.id}`}>{props.title}</NavLink>
-      </div>
-      <div>{props.providerName}</div>
-      <div>
+      </td>
+      <td>{props.providerName}</td>
+      <td>
         {date.getDate() + "."}
         {date.getMonth() + "."}
         {date.getFullYear()}
-      </div>
-      <div>
-        {props.supplyStatus ? "Прибыла" : "В пути"}
-      </div>
-      <div>
-      {props.supplyStatus ? "" : <img src={CheckMark} onClick={approveSupply} alt="" />}
-      </div>
-    </div>
+      </td>
+      <td>
+        {props.supplyStatus ? (
+          <div>
+            <div className={s.status__success}></div> <span>Прибыла</span>
+          </div>
+        ) : (
+          <div>
+            <div className={s.status__process}></div> <span>В пути</span>
+          </div>
+        )}
+      </td>
+      <td>
+        {props.supplyStatus ? (
+          ""
+        ) : (
+          <Button
+            type="primary"
+            onClick={approveSupply}
+            icon={<CheckCircleOutlined style={{ fontSize: "14px" }} />}
+          >
+            Принять поставку
+          </Button>
+        )}
+      </td>
+    </tr>
   );
 }
 

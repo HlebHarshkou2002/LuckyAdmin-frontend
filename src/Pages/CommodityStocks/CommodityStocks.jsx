@@ -6,6 +6,9 @@ import SaleBoard from "../../Components/SaleBoard/SaleBoard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../redux/slices/products";
 
+import { DollarOutlined, CalendarOutlined, AppstoreAddOutlined, BarcodeOutlined } from '@ant-design/icons';
+
+
 function CommodityStocks() {
   const dispatch = useDispatch();
 
@@ -36,21 +39,25 @@ function CommodityStocks() {
           title="Остаток, шт"
           value={sumStoreCount}
           calculation={"Шт"}
+          boardImg={<BarcodeOutlined style={{ fontSize: '26px'}}/>}
         />
         <SaleBoard
           title="Остаток, руб"
           value={sumStoreCountPrice}
           calculation={"BYN"}
+          boardImg={<DollarOutlined style={{ fontSize: '26px'}}/>}
         />
         <SaleBoard
           title="Товарный запас, дн"
           value={Math.floor((sumStoreCount * 30) / sumSalesCount)}
           calculation={"Дн"}
+          boardImg={<AppstoreAddOutlined style={{ fontSize: '26px'}}/>}
         />
         <SaleBoard
           title="Дней в периоде, дн"
           value={30}
           calculation={"Дн"}
+          boardImg={<CalendarOutlined style={{ fontSize: '26px'}}/>}
         />
       </div>
       <StocksProducts />

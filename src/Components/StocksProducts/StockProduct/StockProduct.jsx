@@ -3,27 +3,28 @@ import s from "./StockProduct.module.scss"
 
 function StockProduct(props) {
 
+    let inventory = Math.floor((props.storeCount * 30) / props.saleCount);
     return(
-        <div className={s.sale__wrapper}>
-            <div>
+        <tr className={s.sale__wrapper}>
+            <td>
                 {props.title}
-            </div>
-            <div>
+            </td>
+            <td>
                 {props.storeCount}
-            </div>
-            <div>
+            </td>
+            <td>
                 {props.storeCount * props.price} 
-            </div>
-            <div>
+            </td>
+            <td>
                 {props.storeCount * props.deliveryPrice}
-            </div>
-            <div>
+            </td>
+            <td>
                 {props.providerName ? props.providerName : "Не поставляется"}
-            </div>
-            <div>
-                {Math.floor((props.storeCount * 30) / props.saleCount)}
-            </div>
-        </div>
+            </td>
+            <td>
+                {inventory ? inventory : 0}
+            </td>
+        </tr>
     )
 }
 

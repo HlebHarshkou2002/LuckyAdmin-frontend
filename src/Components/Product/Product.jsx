@@ -3,13 +3,13 @@ import s from './Product.module.scss'
 
 function Product(props) {
     return(
-        <div className={s.product__wrapper}>
-            <div><img src={props.imgUrl} alt="" /></div>
-            <div>{props.title}</div>
-            <div>{props.author}</div>
-            <div>{props.price}BYN</div>
+        <tr className={s.product__wrapper}>
+            <td><img src={props.imgUrl} alt="" /></td>
+            <td><a href={`http://localhost:3001/products/${props._id}`}>{props.title}</a></td>
+            <td>{props.author}</td>
+            <td>{props.price}BYN</td>
             
-        </div>
+        </tr>
     )
 }
 

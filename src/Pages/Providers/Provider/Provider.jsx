@@ -4,17 +4,13 @@ import s from "./Provider.module.scss";
 function Provider(props) {
   console.log(props);
   return (
-    <div className={s.provider__block}>
-      <div>{props.provider.providerName}</div>
-      <div>{props.provider.contactPerson}</div>
-      <div>{props.provider.email}</div>
-      <div>
-        {props.provider.providerStatus ? "Работаем" : "Приостановлен"}
-        </div>
-        <div>
-        {props.provider.workingConditions}
-        </div>
-    </div>
+    <tr className={s.provider__block}>
+      <td>{props.provider.providerName}</td>
+      <td>{props.provider.contactPerson}</td>
+      <td>{props.provider.email}</td>
+      <td>{props.provider.providerStatus ? <div><div className={s.status__success}></div> <span>Работаем</span></div>: <div><div className={s.status__process}></div> <span>Приостановлен</span></div>}</td>
+      <td>{props.provider.workingConditions}</td>
+    </tr>
   );
 }
 

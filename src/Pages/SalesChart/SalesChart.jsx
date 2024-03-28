@@ -147,8 +147,9 @@ const SalesChart = () => {
                 title={"Прибыль"}
                 value={income}
                 calculation={"BYN"}
-
                 boardImg={<DollarOutlined style={{ fontSize: '26px'}}/>}
+                infoTitle={"Прибыль в рублях"}
+                info={"Сколько валовой прибыли мы получили от продаж"}
               />
             </div>
             <div>
@@ -157,6 +158,8 @@ const SalesChart = () => {
                 value={sumCountOfSales}
                 calculation={"Шт"}
                 boardImg={<BarChartOutlined style={{ fontSize: '26px'}}/>}
+                infoTitle={"Количество продаж"}
+                info={"Сколько товара мы продали в штуках"}
 
               />
             </div>
@@ -175,6 +178,8 @@ const SalesChart = () => {
                 value={sumOfProfit}
                 calculation={"BYN"}
                 boardImg={<CreditCardOutlined style={{ fontSize: '26px'}}/>}
+                infoTitle={"Выручка в рублях"}
+                info={"Сколько всего денег мы заработали от продаж товаров"}
               />
             </div>
             {/* <div>

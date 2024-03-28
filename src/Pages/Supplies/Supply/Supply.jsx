@@ -41,7 +41,7 @@ function Supply(props) {
       <td>
         <NavLink to={`/supplies/${props.id}`}>{props.title}</NavLink>
       </td>
-      <td>{props.providerName}</td>
+      <td>{props.providerName ? props.providerName : "Удалён"}</td>
       <td>
         {date.getDate() + "."}
         {date.getMonth() + "."}

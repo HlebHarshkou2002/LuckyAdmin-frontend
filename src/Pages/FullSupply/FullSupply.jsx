@@ -54,14 +54,14 @@ function FullSupply(props) {
         <Title level={5} className={s.supply__date}>
           Поставщик:
         </Title>
-        {data.provider.providerName}
+        {data.provider?.providerName ? data.provider.providerName : "Поставщик удалён"} 
       </div>
       <div>
         <Title level={5} className={s.supply__date}>
           Контакты поставщика:
         </Title>
 
-        {data.provider.email}
+        {data.provider?.email ? data.provider.email : "Поставщик удалён"}
       </div>
       <div>
         <Title level={5} className={s.supply__date}>
@@ -69,16 +69,23 @@ function FullSupply(props) {
         </Title>
         {data.comments}
       </div>
-      <div>
+      <table className={s.sales__wrapper} border="1" bordercolor="#f0f0f0">
+        <tr className={s.header}>
+          <th className={s.header__item}>Фото товара</th>
+          <th className={s.header__item}>Наименование товара</th>
+          <th className={s.header__item}>Производитель</th>
+          <th className={s.header__item}>Цена на сайте(BYN)</th>
+        </tr>
         {data.products.map((product) => (
           <Product
+            _id={product._id}
             title={product.title}
             imgUrl={product.imgUrl}
             author={product.author}
             price={product.price}
           />
         ))}
-      </div>
+      </table>
     </div>
   );
 }

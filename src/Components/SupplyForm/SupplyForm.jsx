@@ -12,14 +12,15 @@ import { Select, Flex } from "antd";
 
 function SupplyForm(props) {
   const dispatch = useDispatch();
-  let { providers } = useSelector((state) => state.providers);
+  let providers = useSelector((state) => state.providers.providers);
+  let status = useSelector((state) => state.providers.status);
 
   const [title, setTitle] = React.useState("");
   const [dateOfDelivery, setDateOfDelivery] = React.useState("");
   const [comments, setComments] = React.useState("");
   const [providerId, setProviderId] = React.useState("");
 
-  const isProvidersLoading = providers.status === "loading";
+  const isProvidersLoading = status === "loading";
 
   const [api, contextHolder] = notification.useNotification();
 
@@ -92,7 +93,7 @@ function SupplyForm(props) {
           options={
             isProvidersLoading
               ? "Loading"
-              : providers.items.data.map((provider) => {
+              : providers.map((provider) => {
                   return {
                     value: provider._id,
                     label: provider.providerName,

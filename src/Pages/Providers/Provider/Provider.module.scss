@@ -1,10 +1,24 @@
 .provider__block {
-    display: flex;
-    margin-bottom: 10px;
-    background-color: #f2f2f2;
+  &:hover {
+    background-color: #fafafa;
+  }
+  td {
     padding: 10px;
 
-    div {
-        width: 300px;
+    .status__success {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 100%;
+      background-color: green;
     }
+
+    .status__process {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 100%;
+      background-color: red;
+    }
+  }
 }

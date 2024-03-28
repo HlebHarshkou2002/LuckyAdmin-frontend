@@ -40,24 +40,32 @@ function CommodityStocks() {
           value={sumStoreCount}
           calculation={"Шт"}
           boardImg={<BarcodeOutlined style={{ fontSize: '26px'}}/>}
+          infoTitle={"Остаток в штуках"}
+          info={"Сколько товара осталось на всех складах в штуках"}
         />
         <SaleBoard
           title="Остаток, руб"
           value={sumStoreCountPrice}
           calculation={"BYN"}
           boardImg={<DollarOutlined style={{ fontSize: '26px'}}/>}
+          infoTitle={"Остаток в рублях"}
+          info={"Сколько товара осталось на всех складах в денежном выражении"}
         />
         <SaleBoard
           title="Товарный запас, дн"
           value={Math.floor((sumStoreCount * 30) / sumSalesCount)}
           calculation={"Дн"}
           boardImg={<AppstoreAddOutlined style={{ fontSize: '26px'}}/>}
+          infoTitle={"Товарный запас"}
+          info={"На сколько дней хватит запаса товаров при таком же потреблении"}
         />
         <SaleBoard
           title="Дней в периоде, дн"
           value={30}
           calculation={"Дн"}
           boardImg={<CalendarOutlined style={{ fontSize: '26px'}}/>}
+          infoTitle={"Дней в периоде"}
+          info={"Период для расчёта товарного запаса"}
         />
       </div>
       <StocksProducts />

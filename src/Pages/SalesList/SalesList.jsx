@@ -36,6 +36,7 @@ function SalesList(props) {
     filteredProducts = products;
   }
   console.log(filteredProducts);
+  console.log(products);
 
   const isProductsLoading = status === "loading";
 

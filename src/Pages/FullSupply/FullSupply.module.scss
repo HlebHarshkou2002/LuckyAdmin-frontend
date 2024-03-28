@@ -1,7 +1,19 @@
 .supply__block {
-    
-    .supply__date {
-        display: inline-block;
-        margin-right: 10px;
+  .supply__date {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  border-collapse: collapse;
+  .sales__wrapper {
+    border-collapse: collapse;
+    .header {
+      background-color: #fafafa;
+      .header__item {
+        text-align: left;
+        font-weight: 600;
+        padding: 15px 10px 15px 5px;
+      }
     }
+  }
 }

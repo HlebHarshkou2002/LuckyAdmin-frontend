@@ -62,8 +62,9 @@ function SalesSidebar(props) {
     setEndDate(dateString[1]);
   };
 
-  let { providers } = useSelector((state) => state.providers);
-  const isProvidersLoading = providers.status === "loading";
+  let providers = useSelector((state) => state.providers.providers);
+  let status = useSelector((state) => state.providers.status);
+  const isProvidersLoading = status === "loading";
 
   const onDateFilter = () => {
     dispatch(filterByDate({ startDate: startDate, endDate: endDate }));
@@ -102,7 +103,7 @@ function SalesSidebar(props) {
   }, []);
 
   if (!isProvidersLoading) {
-    providers = providers.items.data.map((provider) => {
+    providers = providers.map((provider) => {
       return getItem(
         <Checkbox value={provider.providerName} onChange={handleChangeProvider}>
           {provider.providerName}

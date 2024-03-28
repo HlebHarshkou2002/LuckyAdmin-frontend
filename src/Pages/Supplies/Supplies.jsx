@@ -37,7 +37,7 @@ function Supplies() {
                 id={supply._id}
                 title={supply.title}
                 dateOfDelivery={supply.dateOfDelivery}
-                providerName={supply.provider.providerName}
+                providerName={supply.provider?.providerName}
                 supplyStatus={supply.supplyStatus}
               />
             );

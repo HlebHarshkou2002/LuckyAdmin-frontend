@@ -1,0 +1,13 @@
+.sales__wrapper {
+  width: 85%;
+  margin-right: 20px;
+  border-collapse: collapse;
+  .header {
+    background-color: #fafafa;
+    .header__item {
+      text-align: left;
+      font-weight: 600;
+      padding: 15px 10px 15px 5px;
+    }
+  }
+}

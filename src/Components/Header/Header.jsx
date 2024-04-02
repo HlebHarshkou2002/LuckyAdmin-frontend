@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "./Header.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
@@ -9,10 +9,25 @@ import { UserOutlined } from "@ant-design/icons";
 
 import { Avatar, Space, Dropdown, Button } from "antd";
 import { LogoutOutlined, SettingOutlined } from "@ant-design/icons";
+import {  Modal } from 'antd';
 
 function HeaderContainer(props) {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+    dispatch(logout());
+    window.localStorage.removeItem("token");
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
 
   const items = [
     {
@@ -44,7 +59,7 @@ function HeaderContainer(props) {
       label: (
         <div>
           {isAuth ? (
-            <div onClick={onClickLogout} className={s.logout__btn}>
+            <div onClick={showModal} className={s.logout__btn}>
               Выход <LogoutOutlined />
             </div>
           ) : (
@@ -58,12 +73,6 @@ function HeaderContainer(props) {
     },
   ];
 
-  function onClickLogout() {
-    if (window.confirm("Вы действительно хотите выйти?")) {
-      dispatch(logout());
-      window.localStorage.removeItem("token");
-    }
-  }
 
   if (!isAuth) {
     <Navigate to="/" />;
@@ -73,6 +82,9 @@ function HeaderContainer(props) {
     <div className={s.header__wrapper}>
       <div className={s.account__header}>
         <div>
+          <Modal title="Вы действительно хотите выйти?" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} cancelText="Нет" okText="Да">
+            <p>Это приведёт к потере доступа к данным...</p>
+          </Modal>
           <Space wrap size={14}>
             <Dropdown
               menu={{

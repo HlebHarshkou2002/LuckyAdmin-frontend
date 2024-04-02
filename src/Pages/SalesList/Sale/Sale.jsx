@@ -2,8 +2,6 @@ import React from "react";
 import s from "./Sale.module.scss"
 
 function Sale(props) {
-    let date = new Date(props.createdAt)
-
     let revenue = (props.price * props.saleCount).toFixed(2);
     let cost = (props.deliveryPrice * props.saleCount).toFixed(2);
     let profit = (revenue - cost).toFixed(2);
@@ -33,11 +31,6 @@ function Sale(props) {
             </td>
             <td>
                 {props.provider === null ? "Не поставляется" : props.provider.providerName}
-            </td>
-            <td>
-                {date.getDate() + "."}
-                {date.getMonth() + "."}
-                {date.getFullYear()}
             </td>
         </tr>
     )

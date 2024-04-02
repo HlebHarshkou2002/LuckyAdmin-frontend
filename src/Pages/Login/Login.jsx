@@ -7,9 +7,11 @@ import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
 
+import { Button, Flex } from 'antd';
+
 function Login() {
   const isAuth = useSelector(selectIsAuth);
-  
+
 
   console.log('isAuth', isAuth)
 
@@ -29,18 +31,18 @@ function Login() {
   const onSubmit = async (values) => {
     const data = await dispatch(fetchAuth(values))
 
-    if(!data.payload) {
+    if (!data.payload) {
       return alert('Не удалось авторизоваться');
     }
 
-    if('token' in data.payload) {
+    if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token)
     } else {
       alert('Не удалось авторизоваться')
     }
   }
 
-  if(isAuth) {
+  if (isAuth) {
     return <Navigate to="/" />
   }
 
@@ -48,11 +50,11 @@ function Login() {
     <div className={s.login__block__wrapper}>
       <div className={s.login__block__bg}>
         <div className={s.login__block}>
-          <Link to="/" className={s.exit}>
-            X
-          </Link>
+          <div className={s.exit}>
 
-          <div className={s.login__title}>Sign Up</div>
+          </div>
+
+          <div className={s.login__title}>Авторизация</div>
 
           <div className={s.login__fields}>
 
@@ -60,20 +62,21 @@ function Login() {
               <div>
                 <input
                   type="email"
-                  placeholder="Login"
+                  placeholder="Логин"
                   {...register("email", { required: "Укажите почту" })}
                 />
               </div>
               <div>
                 <input
                   type="text"
-                  placeholder="Password"
+                  placeholder="Пароль"
                   {...register("password", { required: "Укажите пароль" })}
                 />
               </div>
 
+
               <div>
-                <button type="submit" className={s.login__button}>Login</button>
+                <button type="submit" className={s.login__button}>Войти</button>
               </div>
             </form>
 

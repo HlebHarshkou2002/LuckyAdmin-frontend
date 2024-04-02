@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Link, Navigate } from "react-router-dom";
 
 import "./App.scss";
@@ -28,10 +28,12 @@ import {
   HistoryOutlined,
   ClusterOutlined,
   ContactsOutlined,
+  HighlightOutlined
 } from "@ant-design/icons";
 import HeaderContainer from "./Components/Header/Header";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import store from "./redux/store";
+import ContentManagement from "./Pages/ContentManagement/ContentManagement";
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -65,6 +67,7 @@ const items = [
   ),
   getItem(<Link to="/providers">Поставщики</Link>, "8", <ContactsOutlined />),
   getItem(<Link to="/admin/users">Пользователи</Link>, "9", <TeamOutlined />),
+  getItem(<Link to="/content">Контент</Link>, "10", <HighlightOutlined />),
 ];
 
 function App() {
@@ -84,10 +87,26 @@ function App() {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  
+  
+  const location = useLocation()
+
+  const locationNames = {
+    products : "Товары",
+    admin : "Администратор",
+    analysis : "Аналитика",
+    sales : "Продажи",
+    stocks : "Товарные запасы",
+    orders : "Заказы",
+    supplies : "Поставки",
+    "add-supply" : "Собрать поставку",
+    providers : "Поставщики",
+    users : "Пользователи",
+    content : "Управление контентом",
+  }
 
   return (
     <Provider store={store}>
-      <BrowserRouter>
         <Layout style={{ minHeight: "100vh" }}>
           <Sider
             collapsible
@@ -121,8 +140,11 @@ function App() {
                   margin: "16px 0",
                 }}
               >
-                <Breadcrumb.Item>User</Breadcrumb.Item>
-                <Breadcrumb.Item>Bill</Breadcrumb.Item>
+                <Breadcrumb.Item>Главная</Breadcrumb.Item>
+                {location.pathname.split('/').filter(el => el !== "").map((item) => {
+                  return <Breadcrumb.Item>{locationNames[item]}</Breadcrumb.Item>
+                })}
+                
               </Breadcrumb>
               <div
                 style={{
@@ -134,15 +156,11 @@ function App() {
               >
                 <div className="App">
                   <div className="container">
-                    {/* <Header
-              email={userData.data?.email}
-            /> */}
+
                     {isAuth ? (
                       <Routes>
-                        <Route path="/login" element={<Login />} />
 
-                        {/* Admin */}
-                        {/* <Route path="/" element={<AdminPanel />} /> */}
+                        <Route path="/login" element={<Login />} />
                         <Route path="/products" element={<AllProducts />} />
                         <Route
                           path="/admin/analysis"
@@ -153,14 +171,16 @@ function App() {
                         <Route path="/supplies" element={<Supplies />} />
                         <Route path="/supplies/:id" element={<FullSupply />} />
                         <Route path="/providers" element={<Providers />} />
-                        <Route
-                          path="/admin/add-supply"
-                          element={<CreateSupply />}
-                        />
+                        <Route path="/admin/add-supply" element={<CreateSupply />} />
                         <Route path="/stocks" element={<CommodityStocks />} />
+                        <Route path="/content" element={<ContentManagement />} />
                       </Routes>
+
                     ) : (
-                      "Требуется авторизация"
+                      <div>
+                        Требуется авторизация
+                        < Login />
+                      </div>
                     )}
                   </div>
                 </div>
@@ -176,7 +196,6 @@ function App() {
             </Footer>
           </Layout>
         </Layout>
-      </BrowserRouter>
     </Provider>
   );
 }

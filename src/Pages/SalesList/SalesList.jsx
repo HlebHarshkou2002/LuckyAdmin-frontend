@@ -99,7 +99,7 @@ function SalesList(props) {
           <th className={s.header__item}>Наценка (%)</th>
           <th className={s.header__item}>Категория</th>
           <th className={s.header__item}>Поставщик</th>
-          <th className={s.header__item}>Дата продажи</th>
+          
         </tr>
         {isProductsLoading
           ? "Loading"
@@ -116,7 +116,6 @@ function SalesList(props) {
                   saleCount={saleCount}
                   price={product.price}
                   deliveryPrice={product.deliveryPrice}
-                  createdAt={product.createdAt}
                   isProductsLoading={isProductsLoading}
                   categories={product.categories}
                   provider={product.provider}
@@ -133,7 +132,7 @@ function SalesList(props) {
           <th className={s.header__item}></th>
           <th className={s.header__item}></th>
           <th className={s.header__item}></th>
-          <th className={s.header__item}></th>
+          
         </tr>
       </table>
       {contextHolder}

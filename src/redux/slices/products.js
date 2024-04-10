@@ -24,8 +24,10 @@ const initialState = {
   //     items: [],
   //     status: "loading",
   //   },
+
   filteredProducts: [],
   isSalesExist: true,
+
   genres: {
     items: [],
     status: "loading",
@@ -36,6 +38,38 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
+    filterSales: (state, action) => {
+      let filteredProducts = [...state.products];
+
+
+      filteredProducts = filteredProducts.filter((product) => {
+        for (let category of action.payload.filterCategories) {
+          if (product.categories.includes(category)) {
+            return true;
+          }
+        }
+
+        for (let providerName of action.payload.filterProviders) {
+          if (product.provider?.providerName === providerName) {
+            return true;
+          }
+        }
+      })
+
+      let isSalesExist = true;
+      if ((filteredProducts.length === 0) && (action.payload.filterCategories.length > 0)) {
+        isSalesExist = false;
+      }
+      if ((action.payload.filterCategories.length === 0)) {
+        isSalesExist = true
+      }
+      
+      return {
+        ...state,
+        filteredProducts: filteredProducts,
+        isSalesExist: isSalesExist
+      };
+    },
     filterByCategory: (state, action) => {
       let filteredProducts = [...state.filteredProducts];
 
@@ -166,13 +200,13 @@ const productsSlice = createSlice({
       let filteredProducts = [...state.products];
 
       filteredProducts = filteredProducts.filter((product) => {
-        if(product.title.toLowerCase().includes(action.payload.value.toLowerCase()) ) {
+        if (product.title.toLowerCase().includes(action.payload.value.toLowerCase())) {
           return true
         } else {
           return false
         }
       })
-      
+
       return {
         ...state,
         filteredProducts
@@ -184,6 +218,26 @@ const productsSlice = createSlice({
       return {
         ...state,
         products: newProducts
+      };
+    },
+    sortByTitle: (state, action) => {
+      let newProducts = [...state.products];
+      if (action.payload.isTitleSorting) {
+        newProducts.sort((a, b) => a.title > b.title ? 1 : -1)
+      }
+      return {
+        ...state,
+        filteredProducts: newProducts
+      };
+    },
+    sortBySalesCount: (state, action) => {
+      let newProducts = [...state.products];
+      if (action.payload.isSalesCountSorting) {
+        newProducts.sort((a, b) => a.saleCount > b.saleCount ? 1 : -1)
+      }
+      return {
+        ...state,
+        filteredProducts: newProducts
       };
     }
   },
@@ -219,3 +273,6 @@ export const { filterByProvider } = productsSlice.actions;
 export const { searchByTitle } = productsSlice.actions;
 export const { filterByDate } = productsSlice.actions;
 export const { addProduct } = productsSlice.actions;
+export const { sortByTitle } = productsSlice.actions;
+export const { sortBySalesCount } = productsSlice.actions;
+export const { filterSales } = productsSlice.actions;

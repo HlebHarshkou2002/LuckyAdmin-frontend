@@ -28,7 +28,8 @@ import {
   HistoryOutlined,
   ClusterOutlined,
   ContactsOutlined,
-  HighlightOutlined
+  HighlightOutlined,
+  ExportOutlined
 } from "@ant-design/icons";
 import HeaderContainer from "./Components/Header/Header";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
@@ -59,15 +60,16 @@ const items = [
   ),
   getItem(<Link to="/stocks">Товарные запасы</Link>, "4", <TableOutlined />),
   getItem(<Link to="/admin/orders">Заказы</Link>, "5", <HistoryOutlined />),
-  getItem(<Link to="/supplies">Поставки</Link>, "6", <InboxOutlined />),
+  getItem(<Link to="/admin/orders">Возвраты товаров</Link>, "6", <ExportOutlined />),
+  getItem(<Link to="/supplies">Поставки</Link>, "7", <InboxOutlined />),
   getItem(
     <Link to="/admin/add-supply">Собрать поставку</Link>,
-    "7",
+    "8",
     <ClusterOutlined />
   ),
-  getItem(<Link to="/providers">Поставщики</Link>, "8", <ContactsOutlined />),
-  getItem(<Link to="/admin/users">Пользователи</Link>, "9", <TeamOutlined />),
-  getItem(<Link to="/content">Контент</Link>, "10", <HighlightOutlined />),
+  getItem(<Link to="/providers">Поставщики</Link>, "9", <ContactsOutlined />),
+  getItem(<Link to="/admin/users">Пользователи</Link>, "10", <TeamOutlined />),
+  getItem(<Link to="/content">Контент</Link>, "11", <HighlightOutlined />),
 ];
 
 function App() {

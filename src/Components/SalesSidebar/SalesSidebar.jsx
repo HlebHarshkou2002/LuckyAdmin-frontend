@@ -6,6 +6,7 @@ import {
   filterByCategory,
   filterByDate,
   filterByProvider,
+  filterSales,
 } from "../../redux/slices/products";
 import { fetchProviders } from "../../redux/slices/providers";
 
@@ -44,14 +45,16 @@ const categoriesArray = [
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
 
+
+let filterCategories = [];
+let filterProviders = [];
+
 function SalesSidebar(props) {
   const dispatch = useDispatch();
 
-  const [category, setCategory] = React.useState("");
-  const [checkCategory, setCheckCategory] = React.useState("");
-
-  const [provider, setProvider] = React.useState("");
-  const [checkProvider, setCheckProvider] = React.useState("");
+  let providers = useSelector((state) => state.providers.providers);
+  let status = useSelector((state) => state.providers.status);
+  const isProvidersLoading = status === "loading";
 
   //Методы для работы с датой
   const [startDate, setStartDate] = React.useState("");
@@ -62,41 +65,27 @@ function SalesSidebar(props) {
     setEndDate(dateString[1]);
   };
 
-  let providers = useSelector((state) => state.providers.providers);
-  let status = useSelector((state) => state.providers.status);
-  const isProvidersLoading = status === "loading";
-
   const onDateFilter = () => {
-    dispatch(filterByDate({ startDate: startDate, endDate: endDate }));
+    // dispatch(filterByDate({ startDate: startDate, endDate: endDate }));
   };
 
   const handleChangeCategory = (e) => {
     if (e.target.checked) {
-      setCategory(e.target.value);
-      setCheckCategory(true);
+      filterCategories.push(e.target.value)
     } else {
-      setCategory(e.target.value);
-      setCheckCategory(false);
+      filterCategories = filterCategories.filter((category) => category !== e.target.value)
     }
+    dispatch(filterSales({ filterCategories: filterCategories,  filterProviders: [] }))
   };
 
   const handleChangeProvider = (e) => {
     if (e.target.checked) {
-      setProvider(e.target.value);
-      setCheckProvider(true);
+      filterProviders.push(e.target.value)
     } else {
-      setProvider(e.target.value);
-      setCheckProvider(false);
+      filterProviders = filterProviders.filter((provider) => provider !== e.target.value)
     }
+    dispatch(filterSales({ filterProviders: filterProviders, filterCategories: []}))
   };
-
-  useEffect(() => {
-    dispatch(filterByCategory({ value: category, checked: checkCategory }));
-  }, [category, checkCategory]);
-
-  useEffect(() => {
-    dispatch(filterByProvider({ value: provider, checked: checkProvider }));
-  }, [provider, checkProvider]);
 
   useEffect(() => {
     dispatch(fetchProviders());

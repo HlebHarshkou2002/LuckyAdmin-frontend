@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Sale from "./Sale/Sale";
 import s from "./SalesList.module.scss";
-import { fetchProducts, searchByTitle } from "../../redux/slices/products";
+import { fetchProducts, searchByTitle, sortBySalesCount, sortByTitle } from "../../redux/slices/products";
 import { useDispatch, useSelector } from "react-redux";
 import SalesSidebar from "../../Components/SalesSidebar/SalesSidebar";
 import axios from "../../redux/axios";
-import { SearchOutlined } from "@ant-design/icons";
+
+
 import { Input } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
+import { DownloadOutlined, SearchOutlined, ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 import { Button, Divider, Flex, Radio } from "antd";
 import { message, Space } from "antd";
 import { Table, Tag } from "antd";
@@ -23,6 +24,8 @@ function SalesList(props) {
 
   const [searchValue, setSearchValue] = useState("");
   const [filePath, setFilePath] = useState("");
+  const [isTitleSorting, setIsTitleSorting] = useState(false)
+  const [isSalesCountSorting, setIsSalesCountSorting] = useState(false)
 
   const [messageApi, contextHolder] = message.useMessage();
   const success = () => {
@@ -35,8 +38,6 @@ function SalesList(props) {
   if (filteredProducts.length === 0) {
     filteredProducts = products;
   }
-  console.log(filteredProducts);
-  console.log(products);
 
   const isProductsLoading = status === "loading";
 
@@ -74,6 +75,16 @@ function SalesList(props) {
     }
   };
 
+  const sortTitle = () => {
+    setIsTitleSorting(!isTitleSorting)
+    dispatch(sortByTitle({isTitleSorting: !isTitleSorting}))
+  }
+
+  const sortSalesCount = () => {
+    setIsSalesCountSorting(!isSalesCountSorting)
+    dispatch(sortBySalesCount({isSalesCountSorting: !isSalesCountSorting}))
+  }
+
   return (
     <div className={s.sales__block}>
       <SalesSidebar />
@@ -91,8 +102,8 @@ function SalesList(props) {
 
       <table className={s.sales__wrapper} border="1" bordercolor="#f0f0f0">
         <tr className={s.header}>
-          <th className={s.header__item}>Наименование товара</th>
-          <th className={s.header__item}>Продажи(Шт)</th>
+          <th className={s.header__item} onClick={sortTitle}>Наименование товара {isTitleSorting ? <ArrowUpOutlined /> : <ArrowDownOutlined />} </th>
+          <th className={s.header__item} onClick={sortSalesCount}>Продажи(Шт) {isSalesCountSorting ? <ArrowUpOutlined /> : <ArrowDownOutlined />}</th>
           <th className={s.header__item}>Выручка (BYN)</th>
           <th className={s.header__item}>Себестоимость (BYN)</th>
           <th className={s.header__item}>Валовая прибыль (BYN)</th>

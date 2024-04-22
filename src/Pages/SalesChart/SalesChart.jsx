@@ -38,16 +38,9 @@ const SalesChart = () => {
 
   const getSortUniqueDateOfSales = (products) => {
     let datesOfSale = [];
-    let sales = [];
     for (let el of products) {
       for (let sale of el.sales) {
-        let date =
-          sale.dayOfSale.toString() +
-          "." +
-          sale.monthOfSale.toString() +
-          "." +
-          sale.yearOfSale.toString();
-        datesOfSale.push(date);
+        datesOfSale.push(sale.dateOfSale);
       }
     }
     const newSet = new Set(datesOfSale);
@@ -55,23 +48,12 @@ const SalesChart = () => {
     uniqueDatesOfSale = uniqueDatesOfSale.sort();
 
     //Начинаем считать продажи по известным дням
-    let sumArrDates = [];
     for (let date of uniqueDatesOfSale) {
-      let arrDates = date.split(".");
-      arrDates = arrDates.map((string) => +string);
-      sumArrDates.push(arrDates);
-    }
-
-    for (let dateArray of sumArrDates) {
       let salesOfDatesCount = 0;
       let profitOfDates = 0;
       for (let el of products) {
         for (let sale of el.sales) {
-          if (
-            sale.dayOfSale === dateArray[0] &&
-            sale.monthOfSale === dateArray[1] &&
-            sale.yearOfSale === dateArray[2]
-          ) {
+          if (sale.dateOfSale === date) {
             salesOfDatesCount += sale.saleCount;
             profitOfDates = sale.saleCount * el.price;
           }
@@ -80,7 +62,6 @@ const SalesChart = () => {
       salesCountArray.push(salesOfDatesCount);
       salesProfitArray.push(profitOfDates);
     }
-    console.log(salesProfitArray);
 
     datesOfSale = [];
     for (let el of uniqueDatesOfSale) {
@@ -94,7 +75,11 @@ const SalesChart = () => {
     let sumOfProfit = 0;
 
     for (let el of products) {
-      profitOfProduct = el.price * el.saleCount;
+      let saleCount = 0
+      for (let sale of el.sales) {
+        saleCount += sale.saleCount
+      }
+      profitOfProduct = el.price * saleCount;
       sumOfProfit += profitOfProduct;
     }
     return sumOfProfit;
@@ -104,7 +89,9 @@ const SalesChart = () => {
     let sumCountOfSales = 0;
 
     for (let el of products) {
-      sumCountOfSales += el.saleCount;
+      for (let sale of el.sales) {
+        sumCountOfSales += sale.saleCount
+      }
     }
     return sumCountOfSales;
   };
@@ -113,7 +100,11 @@ const SalesChart = () => {
     let sumCostPrice = 0;
 
     for (let el of products) {
-      sumCostPrice += el.deliveryPrice * el.saleCount;
+      let saleCount = 0
+      for (let sale of el.sales) {
+        saleCount += sale.saleCount
+      }
+      sumCostPrice += el.deliveryPrice * saleCount;
     }
     return sumCostPrice;
   };
@@ -129,7 +120,7 @@ const SalesChart = () => {
     sumOfProfit = getSumOfProfit(filteredProducts);
     sumCountOfSales = getSumCountOfSales(filteredProducts);
     sumCostPrice = getSumCostPrice(filteredProducts);
-    
+
     income = sumOfProfit - sumCostPrice;
     profitPerCount = income / sumCountOfSales;
   }
@@ -147,7 +138,7 @@ const SalesChart = () => {
                 title={"Прибыль"}
                 value={income}
                 calculation={"BYN"}
-                boardImg={<DollarOutlined style={{ fontSize: '26px'}}/>}
+                boardImg={<DollarOutlined style={{ fontSize: '26px' }} />}
                 infoTitle={"Прибыль в рублях"}
                 info={"Сколько валовой прибыли мы получили от продаж"}
               />
@@ -157,7 +148,7 @@ const SalesChart = () => {
                 title={"Количество продаж"}
                 value={sumCountOfSales}
                 calculation={"Шт"}
-                boardImg={<BarChartOutlined style={{ fontSize: '26px'}}/>}
+                boardImg={<BarChartOutlined style={{ fontSize: '26px' }} />}
                 infoTitle={"Количество продаж"}
                 info={"Сколько товара мы продали в штуках"}
 
@@ -177,7 +168,7 @@ const SalesChart = () => {
                 title={"Выручка"}
                 value={sumOfProfit}
                 calculation={"BYN"}
-                boardImg={<CreditCardOutlined style={{ fontSize: '26px'}}/>}
+                boardImg={<CreditCardOutlined style={{ fontSize: '26px' }} />}
                 infoTitle={"Выручка в рублях"}
                 info={"Сколько всего денег мы заработали от продаж товаров"}
               />

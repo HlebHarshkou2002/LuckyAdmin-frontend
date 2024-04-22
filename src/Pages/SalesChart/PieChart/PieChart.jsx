@@ -19,7 +19,9 @@ function PieChart(props) {
     let sumCountOfSalesByCategory = 0
     for (let el of props.products) {
       if (el.categories[0] === category) {
-        sumCountOfSalesByCategory += el.saleCount;
+        for(let sale of el.sales) {
+          sumCountOfSalesByCategory += sale.saleCount
+        }
       }
     }
     salesByCategories.push(sumCountOfSalesByCategory)

@@ -20,14 +20,8 @@ export const fetchRemoveProduct = createAsyncThunk(
 const initialState = {
   products: [],
   status: "loading",
-  //   products: {
-  //     items: [],
-  //     status: "loading",
-  //   },
-
   filteredProducts: [],
   isSalesExist: true,
-
   genres: {
     items: [],
     status: "loading",
@@ -54,147 +48,41 @@ const productsSlice = createSlice({
             return true;
           }
         }
+
+        if ((action.payload.startDate !== "") && (action.payload.endDate !== "")) {
+          for (let sale of product.sales) {
+            if ((sale.dateOfSale >= action.payload.startDate) && (sale.dateOfSale <= action.payload.endDate)) {
+              return true;
+            }
+          }
+        }
       })
 
+      if ((action.payload.startDate !== "") && (action.payload.endDate !== "")) {
+        filteredProducts = filteredProducts.map((product) => {
+          let newSales = product.sales.filter((sale) => {
+            if ((sale.dateOfSale >= action.payload.startDate) && (sale.dateOfSale <= action.payload.endDate)) {
+              return true;
+            }
+          });
+          return { ...product, sales: newSales };
+        });
+      }
+
+
       let isSalesExist = true;
-      if ((filteredProducts.length === 0) && (action.payload.filterCategories.length > 0)) {
+      if ((filteredProducts.length === 0) && ((action.payload.filterCategories.length > 0) || (action.payload.filterProviders.length > 0) || (action.payload.startDate !== ""))) {
         isSalesExist = false;
       }
-      if ((action.payload.filterCategories.length === 0)) {
+      if ((action.payload.filterCategories.length === 0) && (action.payload.filterProviders.length === 0) && (action.payload.startDate === "")) {
         isSalesExist = true
       }
-      
+
       return {
         ...state,
         filteredProducts: filteredProducts,
         isSalesExist: isSalesExist
       };
-    },
-    filterByCategory: (state, action) => {
-      let filteredProducts = [...state.filteredProducts];
-
-      if (action.payload.checked) {
-        for (let el of state.products) {
-          if (el.categories.includes(action.payload.value)) {
-            filteredProducts.push(el);
-          }
-        }
-      } else {
-        filteredProducts = filteredProducts.filter(
-          (product) => !product.categories.includes(action.payload.value)
-        );
-      }
-
-      //удаление дубликатов
-      const table = {};
-      filteredProducts = filteredProducts.filter(
-        ({ title }) => !table[title] && (table[title] = 1)
-      );
-
-      return {
-        ...state,
-        filteredProducts: filteredProducts,
-        // filteredProducts : action.payload.length > 0 ? filteredProducts : [...state.products]
-      };
-    },
-    filterByProvider: (state, action) => {
-      let filteredProducts = [...state.filteredProducts];
-
-      if (action.payload.checked) {
-        for (let el of state.products) {
-          if (el.provider?.providerName === action.payload.value) {
-            filteredProducts.push(el);
-          }
-        }
-      } else {
-        filteredProducts = filteredProducts.filter(
-          (product) =>
-            !product.provider.providerName.includes(action.payload.value)
-        );
-      }
-
-      //удаление дубликатов
-      const table = {};
-      filteredProducts = filteredProducts.filter(
-        ({ title }) => !table[title] && (table[title] = 1)
-      );
-
-      return {
-        ...state,
-        filteredProducts: filteredProducts,
-        // filteredProducts : action.payload.length > 0 ? filteredProducts : [...state.products]
-      };
-    },
-    filterByDate: (state, action) => {
-      let filteredProducts = [...state.filteredProducts];
-
-      // let [startYear, startMonth, startDay] = action.payload.startDate.split('-').map(str => +str);
-      // let [endYear, endMonth, endDay] = action.payload.endDate.split('-').map(str => +str);
-
-      if (action.payload.startDate) {
-        let [startYear, startMonth, startDay] = action.payload.startDate
-          .split("-")
-          .map((str) => +str);
-
-        if (filteredProducts.length === 0) {
-          for (let el of state.products) {
-            for (let sale of el.sales) {
-              if (
-                sale.yearOfSale >= startYear &&
-                sale.monthOfSale >= startMonth &&
-                sale.dayOfSale >= startDay
-              ) {
-                filteredProducts.push(el);
-              }
-            }
-          }
-        }
-
-        filteredProducts = filteredProducts.map((product) => {
-          for (let el of state.products) {
-            if (el.title === product.title) {
-              let newSales = el.sales.filter((sale) => {
-                if (
-                  sale.yearOfSale >= startYear &&
-                  sale.monthOfSale >= startMonth &&
-                  sale.dayOfSale >= startDay
-                ) {
-                  return true;
-                }
-              });
-              return { ...product, sales: newSales };
-            }
-          }
-        });
-
-        //Если продаж нет то товар удаляется из FilteredProducts
-        filteredProducts = filteredProducts.filter((product) => {
-          if (product.sales.length === 0) {
-            return false;
-          } else {
-            return true;
-          }
-        });
-
-        //удаление дубликатов
-        const table = {};
-        filteredProducts = filteredProducts.filter(
-          ({ title }) => !table[title] && (table[title] = 1)
-        );
-
-        let isSalesExist = false;
-        if (filteredProducts.length === 0 && action.payload.startDate) {
-          isSalesExist = false;
-        } else {
-          isSalesExist = true;
-        }
-
-        return {
-          ...state,
-          filteredProducts,
-          isSalesExist,
-        };
-      }
     },
     searchByTitle: (state, action) => {
       let filteredProducts = [...state.products];

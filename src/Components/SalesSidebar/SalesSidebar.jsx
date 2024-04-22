@@ -61,12 +61,18 @@ function SalesSidebar(props) {
   const [endDate, setEndDate] = React.useState("");
 
   const onChangeDate = (date, dateString) => {
-    setStartDate(dateString[0]);
-    setEndDate(dateString[1]);
+    if (date) {
+      setStartDate(new Date(date[0]).toLocaleDateString());
+      setEndDate(new Date(date[1]).toLocaleDateString());
+    } else {
+      setStartDate("");
+      setEndDate("");
+    }
+
   };
 
   const onDateFilter = () => {
-    // dispatch(filterByDate({ startDate: startDate, endDate: endDate }));
+    dispatch(filterSales({ startDate, endDate, filterProviders, filterCategories }));
   };
 
   const handleChangeCategory = (e) => {
@@ -75,7 +81,7 @@ function SalesSidebar(props) {
     } else {
       filterCategories = filterCategories.filter((category) => category !== e.target.value)
     }
-    dispatch(filterSales({ filterCategories: filterCategories,  filterProviders: [] }))
+    dispatch(filterSales({ filterCategories, filterProviders, startDate, endDate }))
   };
 
   const handleChangeProvider = (e) => {
@@ -84,7 +90,7 @@ function SalesSidebar(props) {
     } else {
       filterProviders = filterProviders.filter((provider) => provider !== e.target.value)
     }
-    dispatch(filterSales({ filterProviders: filterProviders, filterCategories: []}))
+    dispatch(filterSales({ filterProviders, filterCategories, startDate, endDate }))
   };
 
   useEffect(() => {

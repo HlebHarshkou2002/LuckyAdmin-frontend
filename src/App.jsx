@@ -35,6 +35,8 @@ import HeaderContainer from "./Components/Header/Header";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import store from "./redux/store";
 import ContentManagement from "./Pages/ContentManagement/ContentManagement";
+import Orders from "./Pages/Orders/Orders";
+import FullOrder from "./Pages/FullOrder/FullOrder";
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -59,7 +61,7 @@ const items = [
     <ShoppingCartOutlined />
   ),
   getItem(<Link to="/stocks">Товарные запасы</Link>, "4", <TableOutlined />),
-  getItem(<Link to="/admin/orders">Заказы</Link>, "5", <HistoryOutlined />),
+  getItem(<Link to="/orders">Заказы</Link>, "5", <HistoryOutlined />),
   getItem(<Link to="/admin/orders">Возвраты товаров</Link>, "6", <ExportOutlined />),
   getItem(<Link to="/supplies">Поставки</Link>, "7", <InboxOutlined />),
   getItem(
@@ -164,6 +166,8 @@ function App() {
 
                         <Route path="/login" element={<Login />} />
                         <Route path="/products" element={<AllProducts />} />
+                        <Route path="/orders" element={<Orders />} />
+                        <Route path="/orders/:id" element={<FullOrder />} />
                         <Route path="/admin/analysis" element={<SalesChart />} />
                         <Route path="/admin/sales" element={<SalesList />} />
                         <Route path="/admin/users" element={<Users />} />

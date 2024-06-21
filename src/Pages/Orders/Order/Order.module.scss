@@ -1,0 +1,37 @@
+.order__wrapper {
+    &:hover {
+        background-color: #fafafa;
+    }
+
+    td {
+        padding: 10px;
+
+        .order__ok {
+            color: green;
+        }
+
+        .status__success {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 100%;
+            background-color: green;
+        }
+
+        .status__process {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 100%;
+            background-color: rgb(255, 102, 0);
+        }
+
+        .status__ready {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 100%;
+            background-color: yellow;
+        }
+    }
+}

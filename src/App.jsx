@@ -10,8 +10,8 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
 
 import SalesChart from "./Pages/SalesChart/SalesChart";
-import Users from "./Pages/Users/Users";
-import Supplies from "./Pages/Supplies/Supplies";
+import Users from "./Pages/Users/Users.tsx";
+import Supplies from "./Pages/Supplies/Supplies.tsx";
 import FullSupply from "./Pages/FullSupply/FullSupply";
 import Providers from "./Pages/Providers/Providers";
 import CreateSupply from "./Pages/CreateSupply/CreateSupply";
@@ -33,7 +33,7 @@ import {
 } from "@ant-design/icons";
 import HeaderContainer from "./Components/Header/Header";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
-import store from "./redux/store";
+import store from "./redux/store.ts";
 import ContentManagement from "./Pages/ContentManagement/ContentManagement";
 import Orders from "./Pages/Orders/Orders";
 import FullOrder from "./Pages/FullOrder/FullOrder";

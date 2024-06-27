@@ -1,27 +1,23 @@
 import axios from "axios";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchSupplies } from "../../redux/slices/supplies";
-import Supply from "./Supply/Supply.jsx";
+import { fetchSupplies } from "../../redux/slices/supplies.ts";
+import Supply from "./Supply/Supply.tsx";
 import s from './Supplies.module.scss'
+import { useAppDispatch, useAppSelector } from "../../redux/hooks.ts";
 
 function Supplies() {
-  const dispatch = useDispatch();
-  const supplies = useSelector((state) => state.supplies.supplies);
-  const status = useSelector((state) => state.supplies.status);
+  const dispatch = useAppDispatch();
+  const supplies = useAppSelector((state) => state.supplies.supplies);
+  const status = useAppSelector((state) => state.supplies.status);
 
-  const isSuppliesLoading = status === "loading";
-
-
-  console.log(supplies);
-  // console.log(status);
+  const isSuppliesLoading : boolean = status === "loading";
 
   React.useEffect(() => {
     const supplies = dispatch(fetchSupplies());
   }, []);
 
   return (
-    <table className={s.supply__block} border="1" bordercolor="#f0f0f0">
+    <table className={s.supply__block}>
       <tr className={s.header}>
         <th className={s.header__item}>Наименование поставки</th>
         <th className={s.header__item}>Поставщик</th>

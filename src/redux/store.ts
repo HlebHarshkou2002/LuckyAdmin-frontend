@@ -4,13 +4,13 @@ import { productsReducer } from "./slices/products";
 import { authReducer } from "./slices/auth";
 import cartSlice from "./slices/cartSlice";
 import { salesReducer } from "./slices/sales";
-import { usersReducer } from "./slices/users";
-import { suppliesReducer } from "./slices/supplies";
+import { usersReducer } from "./slices/users.ts";
+import { suppliesReducer } from "./slices/supplies.ts";
 import { providersReducer } from "./slices/providers";
 import { shopInfoReducer } from "./slices/shopInfo";
 import { ordersReducer } from "./slices/orders";
 
-export const store = configureStore({
+const store = configureStore({
     reducer: {
         products: productsReducer,
         auth: authReducer,
@@ -23,5 +23,10 @@ export const store = configureStore({
         orders: ordersReducer
     }
 })
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
 
 export default store;

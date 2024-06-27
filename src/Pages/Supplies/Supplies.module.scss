@@ -1,8 +1,16 @@
 .supply__block {
   border-collapse: collapse;
   width: 100%;
+
+  TD,
+  TH {
+    border: 1px solid #f0f0f0;
+    /* Параметры рамки */
+  }
+
   .header {
     background-color: #fafafa;
+
     .header__item {
       text-align: left;
       font-weight: 600;

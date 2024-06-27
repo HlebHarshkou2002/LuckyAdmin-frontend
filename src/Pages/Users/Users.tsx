@@ -1,23 +1,24 @@
 import React from "react";
-import User from "./User/User";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../../redux/slices/users";
+import User from "./User/User.tsx";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks.ts";
+import { fetchUsers } from "../../redux/slices/users.ts";
 
 import s from "./Users.module.scss"
 
 function Users() {
-  const dispatch = useDispatch();
-  const users = useSelector((state) => state.users.users);
+  const dispatch = useAppDispatch();
 
-  const isUsersLoading = users.status === "loading";
+  const users = useAppSelector(state => state.users.users);
+  const status = useAppSelector(state => state.users.status);
 
-  console.log(users);
+  const isUsersLoading = status === "loading";
+
   React.useEffect(() => {
     dispatch(fetchUsers());
   }, []);
 
   return (
-    <table className={s.sales__wrapper} border="1" bordercolor="#f0f0f0">
+    <table className={s.sales__wrapper}>
       <tr className={s.header}>
         <th className={s.header__item}>Имя пользователя</th>
         <th className={s.header__item}>Почта пользователя</th>
@@ -26,7 +27,7 @@ function Users() {
       </tr>
       {isUsersLoading
         ? "Loading"
-        : users.items.data.map((user) => (
+        : users.map((user) => (
             <User
               _id={user._id}
               fullName={user.fullName}
@@ -36,7 +37,7 @@ function Users() {
           ))}
       <tr className={s.header}>
         <th className={s.header__item}>Общее количество пользователей:</th>
-        <th className={s.header__item}>{isUsersLoading ? "loading" : users.items.data.length}</th>
+        <th className={s.header__item}>{isUsersLoading ? "loading" : users.length}</th>
         <th className={s.header__item}></th>
         <th className={s.header__item}></th>
       </tr>

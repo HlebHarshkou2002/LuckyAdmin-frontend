@@ -2,15 +2,24 @@ import React from "react";
 import s from "./Supply.module.scss";
 import { NavLink } from "react-router-dom";
 
-import axios from "../../../redux/axios";
+import axios from "../../../redux/axios.js";
 
 import { notification } from "antd";
 import { Button, Flex } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import { approveSupplyStatus } from "../../../redux/slices/supplies";
+import { approveSupplyStatus } from "../../../redux/slices/supplies.ts";
 
-function Supply(props) {
+
+type SupplyProps = {
+  id: String;
+  title: String;
+  dateOfDelivery: Date;
+  providerName: String;
+  supplyStatus: boolean;
+}
+
+function Supply(props : SupplyProps) {
   const dispatch = useDispatch();
   let date = new Date(props.dateOfDelivery);
 

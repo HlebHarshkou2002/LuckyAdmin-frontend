@@ -87,7 +87,6 @@ function SalesList(props) {
 
   return (
     <div className={s.sales__block}>
-      <SalesSidebar />
 
       <Input
         size="large"
@@ -160,6 +159,7 @@ function SalesList(props) {
           </Button>
         </Space>
       </div>
+
     </div>
   );
 }

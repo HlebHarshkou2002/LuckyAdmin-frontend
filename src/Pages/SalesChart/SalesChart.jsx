@@ -131,7 +131,6 @@ const SalesChart = () => {
         "Loading"
       ) : (
         <div>
-          <SalesSidebar />
           <div className={s.dashboard}>
             <div>
               <SaleBoard

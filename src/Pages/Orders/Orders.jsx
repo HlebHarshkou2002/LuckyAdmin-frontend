@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import axios from "../../redux/axios";
 import React from "react";
-import { fetchOrders } from "../../redux/slices/orders";
+import { addOrder, fetchOrders } from "../../redux/slices/orders";
 import Order from "./Order/Order";
 
 import s from "./Orders.module.scss"
@@ -10,12 +9,38 @@ import s from "./Orders.module.scss"
 function Orders() {
     const dispatch = useDispatch();
 
-    const { items, status } = useSelector((state) => state.orders.orders)
+    const orders = useSelector((state) => state.orders.orders)
+    const status = useSelector((state) => state.orders.status)
     const isOrdersLoading = status === "loading";
 
-
+    //WebSocket
     React.useEffect(() => {
         dispatch(fetchOrders())
+        const wsConnection = new WebSocket('ws://localhost:8080')
+
+        wsConnection.onopen = () => {
+            console.log("Socket подключился")
+            const message = {
+                event: "connection"
+            }
+            wsConnection.send(JSON.stringify(message))
+        }
+        wsConnection.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            console.log(message)
+            
+            if (message.products) {
+                dispatch(addOrder(message))
+            }
+        }
+        wsConnection.onclose = () => {
+            console.log("Socket закрыт")
+        }
+        wsConnection.onerror = () => {
+            console.log("Socket ошибка")
+        }
+
+
     }, [])
 
     return (
@@ -29,8 +54,8 @@ function Orders() {
                 <th className={s.header__item}>Отмена заказа</th>
             </tr>
             {isOrdersLoading ? "Loading" :
-                items.data.map((order) => (
-                    <Order id={order._id} userName={order.user.fullName} dateOfOrder={order.createdAt} orderStatus={order.orderStatus} products={order.products} orderStatus={order.orderStatus}/>
+                orders.map((order) => (
+                    <Order id={order._id} userName={order.user?.fullName} dateOfOrder={order.createdAt} orderStatus={order.orderStatus} products={order.products} />
                 ))
             }
         </table>

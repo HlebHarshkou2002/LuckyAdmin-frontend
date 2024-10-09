@@ -3,32 +3,40 @@ import axios from "../axios";
 
 export const fetchOrders = createAsyncThunk('products/fetchOrders', async () => {
     const data = await axios.get('/orders');
-    return data;
+    return data.data;
 })
 
 const initialState = {
-    orders: {
-        items: [],
-        status: 'loading'
-    },
+    orders: [],
+    status: 'loading'
 }
 
 const ordersSlice = createSlice({
     name: 'orders',
     initialState,
-    reducers: {},
+    reducers: {
+        addOrder: (state, action) => {
+            let newOrders = [...state.orders];
+            
+            newOrders.push(action.payload)
+            return {
+                ...state,
+                orders: newOrders
+            };
+        },
+    },
     extraReducers: {
         //Получение товаров
         [fetchOrders.pending]: (state, action) => {
-            state.orders.status = 'loading'
+            state.status = 'loading'
         },
         [fetchOrders.fulfilled]: (state, action) => {
-            state.orders.items = action.payload
-            state.orders.status = 'loaded'
+            state.orders = action.payload
+            state.status = 'loaded'
         },
         [fetchOrders.rejected]: (state, action) => {
-            state.orders.items = []
-            state.orders.status = 'error'
+            state.orders = []
+            state.status = 'error'
         },
 
 
@@ -36,3 +44,4 @@ const ordersSlice = createSlice({
 });
 
 export const ordersReducer = ordersSlice.reducer
+export const { addOrder } = ordersSlice.actions;

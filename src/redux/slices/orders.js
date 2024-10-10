@@ -24,6 +24,42 @@ const ordersSlice = createSlice({
                 orders: newOrders
             };
         },
+        orderReady: (state, action) => {
+            let newOrders = [...state.orders];
+
+            newOrders = newOrders.map((order) => {
+                if(order._id === action.payload.orderId) {
+                    return {
+                        ...order,
+                        orderStatus: "ready"
+                    }
+                } else {
+                    return order;
+                }
+            })
+            return {
+                ...state,
+                orders: newOrders
+            };
+        },
+        orderApprove: (state, action) => {
+            let newOrders = [...state.orders];
+
+            newOrders = newOrders.map((order) => {
+                if(order._id === action.payload.orderId) {
+                    return {
+                        ...order,
+                        orderStatus: "approve"
+                    }
+                } else {
+                    return order;
+                }
+            })
+            return {
+                ...state,
+                orders: newOrders
+            };
+        }
     },
     extraReducers: {
         //Получение товаров
@@ -45,3 +81,5 @@ const ordersSlice = createSlice({
 
 export const ordersReducer = ordersSlice.reducer
 export const { addOrder } = ordersSlice.actions;
+export const { orderReady } = ordersSlice.actions;
+export const { orderApprove } = ordersSlice.actions;

@@ -1,27 +1,39 @@
 import axios from "../../../redux/axios";
 import React from "react";
 import s from "./Order.module.scss"
+import { useDispatch } from "react-redux";
+
 
 import { Button, Flex } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { notification } from "antd";
 import { NavLink } from "react-router-dom";
+import { orderApprove, orderReady } from "../../../redux/slices/orders";
 
 function Order(props) {
+    const dispatch = useDispatch()
 
     const onOrderReady = () => {
         axios.post("/orders/ready", {
             orderId: props.id
+        }).then(() => {
+            openNotificationReady("success");
+            dispatch(orderReady({orderId: props.id}))
         })
-        openNotificationReady("success");
     }
 
     const onOrderApprove = () => {
-        axios.post("/products/sale", props.products)
-        axios.post("/orders/approve", {
-            orderId: props.id
+        axios.post("/products/sale", props.products).then(() => {
+            axios.post("/orders/approve", {
+                orderId: props.id
+            }).then(() => {
+                openNotificationApprove("success");
+                dispatch(orderApprove({orderId: props.id}))
+            }).catch(function (error) {
+                console.log(error);
+            });
         })
-        openNotificationApprove("success");
+
     }
 
     const [api, contextHolder] = notification.useNotification();

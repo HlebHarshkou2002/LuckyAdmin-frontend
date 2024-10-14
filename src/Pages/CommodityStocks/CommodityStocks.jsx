@@ -13,7 +13,13 @@ function CommodityStocks() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(fetchProducts());
+    const limit = 100;
+    const page = 1;
+    const paginationObj = {
+      limit,
+      page
+    }
+    dispatch(fetchProducts(paginationObj));
   }, []);
 
   const status = useSelector((state) => state.products.status);
@@ -39,7 +45,7 @@ function CommodityStocks() {
           title="Остаток, шт"
           value={sumStoreCount}
           calculation={"Шт"}
-          boardImg={<BarcodeOutlined style={{ fontSize: '26px'}}/>}
+          boardImg={<BarcodeOutlined style={{ fontSize: '26px' }} />}
           infoTitle={"Остаток в штуках"}
           info={"Сколько товара осталось на всех складах в штуках"}
         />
@@ -47,7 +53,7 @@ function CommodityStocks() {
           title="Остаток, руб"
           value={sumStoreCountPrice}
           calculation={"BYN"}
-          boardImg={<DollarOutlined style={{ fontSize: '26px'}}/>}
+          boardImg={<DollarOutlined style={{ fontSize: '26px' }} />}
           infoTitle={"Остаток в рублях"}
           info={"Сколько товара осталось на всех складах в денежном выражении"}
         />
@@ -55,7 +61,7 @@ function CommodityStocks() {
           title="Товарный запас, дн"
           value={Math.floor((sumStoreCount * 30) / sumSalesCount)}
           calculation={"Дн"}
-          boardImg={<AppstoreAddOutlined style={{ fontSize: '26px'}}/>}
+          boardImg={<AppstoreAddOutlined style={{ fontSize: '26px' }} />}
           infoTitle={"Товарный запас"}
           info={"На сколько дней хватит запаса товаров при таком же потреблении"}
         />
@@ -63,7 +69,7 @@ function CommodityStocks() {
           title="Дней в периоде, дн"
           value={30}
           calculation={"Дн"}
-          boardImg={<CalendarOutlined style={{ fontSize: '26px'}}/>}
+          boardImg={<CalendarOutlined style={{ fontSize: '26px' }} />}
           infoTitle={"Дней в периоде"}
           info={"Период для расчёта товарного запаса"}
         />

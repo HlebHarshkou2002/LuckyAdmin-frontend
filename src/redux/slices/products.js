@@ -4,9 +4,12 @@ import { act } from "react-dom/test-utils";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async () => {
-    const data = await axios.get("/products");
-    return data;
+  async (obj) => {
+    const limit = obj.limit
+    const page = obj.page;
+    const {data} = await axios.get(`/products?page=${page}&limit=${limit}`);
+    const {totalCountProducts, resultProducts} = data
+    return {data: resultProducts, totalCountProducts: totalCountProducts};
   }
 );
 
@@ -19,6 +22,7 @@ export const fetchRemoveProduct = createAsyncThunk(
 
 const initialState = {
   products: [],
+  totalCountProducts: 0,
   status: "loading",
   filteredProducts: [],
   isSalesExist: true,
@@ -136,6 +140,7 @@ const productsSlice = createSlice({
     },
     [fetchProducts.fulfilled]: (state, action) => {
       state.products = action.payload.data;
+      state.totalCountProducts = action.payload.totalCountProducts
       state.filteredProducts = [];
       state.status = "loaded";
     },
@@ -149,6 +154,7 @@ const productsSlice = createSlice({
       state.products = state.products.filter(
         (obj) => obj._id !== action.meta.arg
       );
+      state.totalCountProducts = --action.payload.totalCountProducts
       state.status = "loaded";
     }
   },

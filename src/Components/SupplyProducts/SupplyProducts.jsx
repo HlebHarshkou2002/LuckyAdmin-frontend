@@ -12,7 +12,13 @@ function SupplyProducts(props) {
   const isProductsLoading = status === "loading";
 
   React.useEffect(() => {
-    dispatch(fetchProducts());
+    const limit = 100;
+    const page = 1;
+    const paginationObj = {
+      limit,
+      page
+    }
+    dispatch(fetchProducts(paginationObj));
   }, []);
 
   return (

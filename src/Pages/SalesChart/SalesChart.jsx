@@ -28,7 +28,13 @@ const SalesChart = () => {
   }
 
   React.useEffect(() => {
-    dispatch(fetchProducts());
+    const limit = 100;
+    const page = 1;
+    const paginationObj = {
+      limit,
+      page
+    }
+    dispatch(fetchProducts(paginationObj));
   }, []);
 
   //Массив содержит информацию о количестве продаж товаров по датам

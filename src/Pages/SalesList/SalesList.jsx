@@ -46,7 +46,13 @@ function SalesList(props) {
   }, [searchValue]);
 
   React.useEffect(() => {
-    dispatch(fetchProducts());
+    const limit = 100;
+    const page = 1;
+    const paginationObj = {
+      limit,
+      page
+    }
+    dispatch(fetchProducts(paginationObj));
   }, []);
 
   let sumSaleCount = 0;
@@ -77,12 +83,12 @@ function SalesList(props) {
 
   const sortTitle = () => {
     setIsTitleSorting(!isTitleSorting)
-    dispatch(sortByTitle({isTitleSorting: !isTitleSorting}))
+    dispatch(sortByTitle({ isTitleSorting: !isTitleSorting }))
   }
 
   const sortSalesCount = () => {
     setIsSalesCountSorting(!isSalesCountSorting)
-    dispatch(sortBySalesCount({isSalesCountSorting: !isSalesCountSorting}))
+    dispatch(sortBySalesCount({ isSalesCountSorting: !isSalesCountSorting }))
   }
 
   return (
@@ -109,13 +115,13 @@ function SalesList(props) {
           <th className={s.header__item}>Наценка (%)</th>
           <th className={s.header__item}>Категория</th>
           <th className={s.header__item}>Поставщик</th>
-          
+
         </tr>
         {isProductsLoading
           ? "Loading"
           : !isSalesExist
-          ? "Продаж нет"
-          : filteredProducts.map((product) => {
+            ? "Продаж нет"
+            : filteredProducts.map((product) => {
               let saleCount = 0;
               product.sales.map((sale) => {
                 saleCount += sale.saleCount;
@@ -142,7 +148,7 @@ function SalesList(props) {
           <th className={s.header__item}></th>
           <th className={s.header__item}></th>
           <th className={s.header__item}></th>
-          
+
         </tr>
       </table>
       {contextHolder}
